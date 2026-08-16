@@ -1,0 +1,11 @@
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\config\CustomUserDetailsService.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\config\GlobalExceptionHandler.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\config\JwtAuthFilter.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\config\JwtService.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\config\RestTemplateConfig.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\config\SecurityConfig.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\controller\AuthController.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\controller\UserController.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\dto\LoginRequest.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\api\service\UserService.java
+E:\Git\SkillTrack\skilltrack-backend\user-service\src\main\java\com\skilltrack\UserServiceApplication.java

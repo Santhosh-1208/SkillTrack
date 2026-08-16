@@ -1,0 +1,232 @@
+{
+    "simulation_id":  "LOTO_PROC_004",
+    "title":  "Lockout/Tagout (LOTO) Procedure",
+    "branch":  "Electrical/Mechanical",
+    "level":  2,
+    "interaction_pattern":  "sequence",
+    "goal":  "Safely isolate ALL hazardous energy sources before maintenance to prevent accidental machine startup.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Safety \u0026 HSE",
+    "learning_content":  {
+                             "what":  "Lockout/Tagout (LOTO) is an OSHA-mandated safety procedure that prevents the accidental energization of machinery during maintenance. Each year, failure to implement LOTO correctly causes over 120 fatalities and 50,000 injuries in industrial settings globally. It applies to all energy forms: electrical, pneumatic, hydraulic, thermal, mechanical, and gravitational.",
+                             "how":  "Follow six steps strictly in order: Notify personnel → Shut down the machine normally → Isolate ALL energy sources (not just electrical) → Apply your personal padlock → Attach a filled-out tag → Verify zero energy (start attempt + voltmeter probe). Every individual worker performing maintenance must apply their own personal padlock. Never share a key."
+                         },
+    "prerequisites":  [
+                          "PPE_COMPLIANCE_001"
+                      ],
+    "time_limit_seconds":  300,
+    "sop_steps":  [
+                      {
+                          "step_id":  "LOTO_S1",
+                          "order":  1,
+                          "instruction":  "Review the machine-specific LOTO procedure sheet for this equipment.",
+                          "expected_action":  "review_loto_sheet",
+                          "is_safety_critical":  false,
+                          "hint":  "The LOTO procedure sheet is posted on the machine panel. It lists every energy source."
+                      },
+                      {
+                          "step_id":  "LOTO_S2",
+                          "order":  2,
+                          "instruction":  "Notify all affected personnel that the machine will be shut down.",
+                          "expected_action":  "notify_personnel",
+                          "is_safety_critical":  false,
+                          "hint":  "Verbal notification and a posted sign on the machine are both required."
+                      },
+                      {
+                          "step_id":  "LOTO_S3",
+                          "order":  3,
+                          "instruction":  "Shut down the equipment using its normal stopping procedure.",
+                          "expected_action":  "shutdown_equipment",
+                          "is_safety_critical":  false,
+                          "hint":  "Use the control panel OFF button — do not trip the breaker as the first step."
+                      },
+                      {
+                          "step_id":  "LOTO_S4",
+                          "order":  4,
+                          "instruction":  "Isolate the main power breaker by flipping it to the OFF position.",
+                          "expected_action":  "isolate_breaker",
+                          "is_safety_critical":  true,
+                          "hint":  "The main breaker is in the motor control center (MCC). Flip it to the OFF position."
+                      },
+                      {
+                          "step_id":  "LOTO_S5",
+                          "order":  5,
+                          "instruction":  "Apply the physical safety padlock to the breaker hasp.",
+                          "expected_action":  "apply_padlock",
+                          "is_safety_critical":  true,
+                          "hint":  "Each worker must apply their own personal padlock. Never share a key."
+                      },
+                      {
+                          "step_id":  "LOTO_S6",
+                          "order":  6,
+                          "instruction":  "Attach the LOTO warning tag to the padlock, filled out with your name, date and reason.",
+                          "expected_action":  "apply_tag",
+                          "is_safety_critical":  true,
+                          "hint":  "A tag without a name and date is invalid and does not count as a proper tagout."
+                      },
+                      {
+                          "step_id":  "LOTO_S7",
+                          "order":  7,
+                          "instruction":  "Dissipate or restrain any stored energy (de-energize capacitors, bleed pneumatic lines, block gravity-held parts).",
+                          "expected_action":  "dissipate_stored_energy",
+                          "is_safety_critical":  true,
+                          "hint":  "After cutting power, check for pneumatic air lines, springs, gravity loads, and capacitor banks."
+                      },
+                      {
+                          "step_id":  "LOTO_S8",
+                          "order":  8,
+                          "instruction":  "Verify zero energy state: attempt to start the machine, then use a voltmeter on all isolation points.",
+                          "expected_action":  "verify_zero_energy",
+                          "is_safety_critical":  true,
+                          "hint":  "First press the START button to prove the machine won\u0027t start, then probe with the voltmeter. Both checks are required."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "LOTO_D1",
+                                "after_step":  "LOTO_S4",
+                                "prompt":  "You notice a secondary pneumatic air line connected to the machine. What should you do?",
+                                "time_limit_seconds":  60,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Ignore it — the electrical breaker is enough.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Stored pneumatic energy can still cause mechanical movement and injury.",
+                                                    "mistake_id":  "LOTO_M_MISSED_ENERGY_SOURCE"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Close the pneumatic shutoff valve and apply a valve lockout device.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. All energy sources — electrical, pneumatic, hydraulic — must be isolated.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "LOTO_D2",
+                                "after_step":  "LOTO_S8",
+                                "prompt":  "The voltmeter still reads 6V at the load side of the breaker. Do you proceed with maintenance?",
+                                "time_limit_seconds":  60,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Yes — 6V is too small to be dangerous.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Any residual voltage must be investigated. It may indicate a faulty isolation or a secondary feed.",
+                                                    "mistake_id":  "LOTO_M_INCOMPLETE_VERIFY"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "No — stop and investigate the source of the residual voltage.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Zero energy verification must be confirmed. Residual voltage must be traced and resolved.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "LOTO_M_SKIPPED_LOCK",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Applied tag without a physical padlock.",
+                                  "consequence":  "Tags are only warnings — they do not physically prevent re-energization.",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "LOTO_M_MISSED_ENERGY_SOURCE",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Failed to isolate a secondary energy source (pneumatic, hydraulic, or gravity).",
+                                  "consequence":  "Stored energy can release unexpectedly causing serious injury.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "LOTO_M_INCOMPLETE_VERIFY",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Proceeded with maintenance despite a non-zero voltmeter reading.",
+                                  "consequence":  "Worker exposed to live electrical energy.",
+                                  "mistake_penalty":  40,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.6,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "LOTO_M_NO_NOTIFICATION",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Failed to notify affected personnel before shutting down equipment.",
+                                  "consequence":  "Co-workers may be unexpectedly affected by the shutdown.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Communication":  0.5
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "LOTO_M_SHARED_KEY",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Used a shared or master padlock key instead of a personal lock.",
+                                  "consequence":  "Another worker could re-energize the machine while maintenance is in progress.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.4,
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "LOTO_H1",
+                      "related_step":  "LOTO_S5",
+                      "text":  "Remember: Lock OUT first, then Tag OUT. Never tag without locking.",
+                      "penalty_if_used":  5
+                  },
+                  {
+                      "hint_id":  "LOTO_H2",
+                      "related_step":  "LOTO_S7",
+                      "text":  "Stored energy includes springs, suspended loads, pressure lines, and charged capacitors.",
+                      "penalty_if_used":  3
+                  }
+              ],
+    "competencies":  [
+                         "Safety Awareness",
+                         "Procedure Accuracy",
+                         "Task Knowledge",
+                         "Communication"
+                     ],
+    "competency_weights":  {
+                               "Safety Awareness":  0.45,
+                               "Procedure Accuracy":  0.3,
+                               "Task Knowledge":  0.15,
+                               "Communication":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Safety Awareness",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "ELECTRICAL_PANEL_002",
+                                     "reason":  "Review basic electrical safety and hazard awareness before attempting LOTO on real equipment."
+                                 }
+                             ],
+    "simulation_type":  "PROCEDURAL"
+}

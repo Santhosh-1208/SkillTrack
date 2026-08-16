@@ -1,0 +1,72 @@
+
+> skilltrack-frontend@1.0.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m1383[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[2m1:33:07 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/forms/EditProfileForm.jsx, /src/styles/index.css[22m
+[2m1:33:07 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/forms/EditProfileForm.jsx, /src/styles/index.css[22m
+[2m1:33:56 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/LearnerDashboardPage.jsx, /src/styles/index.css[22m
+[2m1:34:49 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/TrainerDashboardPage.jsx, /src/styles/index.css[22m
+[2m1:35:58 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/AdminDashboardPage.jsx, /src/styles/index.css[22m
+[2m1:37:32 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/platform/engine/context/AuthContext.jsx, /src/styles/index.css[22m
+[2m1:37:32 pm[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/platform/engine/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m1:37:32 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/platform/engine/context/AuthContext.jsx[22m
+[2m1:37:49 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/RegistrationPage.jsx, /src/styles/index.css[22m
+[2m1:47:20 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/platform/engine/context/AuthContext.jsx, /src/styles/index.css, /src/app/pages/LeaderboardPage.jsx, /src/app/pages/ScenarioManagementPage.jsx, /src/app/pages/AdminDashboardPage.jsx, /src/app/pages/AIFeedbackPage.jsx, /src/app/pages/ProfilePage.jsx, /src/app/pages/TrainerDashboardPage.jsx, /src/app/pages/AnalyticsPage.jsx, /src/app/forms/AddTrainerForm.jsx, /src/app/forms/EditProfileForm.jsx, /src/app/forms/AddLearnerForm.jsx, /src/app/forms/AddScenarioForm.jsx, /src/app/pages/LearnerDashboardPage.jsx, /src/app/pages/SimulationRunnerPage.jsx, /src/app/pages/SimulationsListPage.jsx, /src/app/pages/NotificationsPage.jsx, /src/app/pages/ReportsPage.jsx, /src/app/pages/SimulationDetailPage.jsx, /src/app/pages/AchievementsPage.jsx, /src/app/pages/CertificatesPage.jsx, /src/app/pages/components/VisualInspectionView.jsx[22m
+[2m1:47:21 pm[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/platform/engine/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m1:47:21 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/platform/engine/context/AuthContext.jsx[22m
+[2m1:47:32 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/platform/engine/context/AuthContext.jsx, /src/styles/index.css, /src/app/pages/LeaderboardPage.jsx, /src/app/pages/ScenarioManagementPage.jsx, /src/app/pages/AdminDashboardPage.jsx, /src/app/pages/AIFeedbackPage.jsx, /src/app/pages/ProfilePage.jsx, /src/app/pages/TrainerDashboardPage.jsx, /src/app/pages/AnalyticsPage.jsx, /src/app/forms/AddTrainerForm.jsx, /src/app/forms/EditProfileForm.jsx, /src/app/forms/AddLearnerForm.jsx, /src/app/forms/AddScenarioForm.jsx, /src/app/pages/LearnerDashboardPage.jsx[22m
+[2m1:47:33 pm[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/platform/engine/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m1:47:33 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/platform/engine/context/AuthContext.jsx[22m
+[2m2:04:15 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/app/pages/SimulationsListPage.jsx, /src/app/pages/LearnerDashboardPage.jsx, /src/app/pages/NotificationsPage.jsx, /src/app/pages/ReportsPage.jsx, /src/app/pages/SimulationDetailPage.jsx, /src/app/pages/AIFeedbackPage.jsx, /src/app/pages/SimulationRunnerPage.jsx, /src/app/pages/TrainerDashboardPage.jsx, /src/app/pages/AnalyticsPage.jsx, /src/app/pages/ScenarioManagementPage.jsx, /src/app/pages/AdminDashboardPage.jsx, /src/app/forms/AddScenarioForm.jsx[22m
+[2m2:04:43 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/app/pages/AchievementsPage.jsx, /src/app/pages/LeaderboardPage.jsx, /src/app/pages/CertificatesPage.jsx, /src/app/pages/LearnerDashboardPage.jsx, /src/app/pages/ReportsPage.jsx, /src/app/pages/SimulationDetailPage.jsx, /src/app/pages/AIFeedbackPage.jsx, /src/app/pages/ProfilePage.jsx, /src/app/pages/SimulationRunnerPage.jsx, /src/app/pages/AnalyticsPage.jsx[22m
+[2m2:10:14 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/RegistrationPage.jsx, /src/styles/index.css[22m
+[2m2:13:40 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/forms/EditProfileForm.jsx, /src/styles/index.css[22m
+[2m2:33:36 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/app/pages/AchievementsPage.jsx, /src/app/pages/LeaderboardPage.jsx, /src/app/pages/CertificatesPage.jsx, /src/app/pages/LearnerDashboardPage.jsx, /src/app/pages/ReportsPage.jsx, /src/app/pages/SimulationDetailPage.jsx, /src/app/pages/AIFeedbackPage.jsx, /src/app/pages/ProfilePage.jsx, /src/app/pages/SimulationRunnerPage.jsx, /src/app/pages/AnalyticsPage.jsx[22m
+[2m2:33:47 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/app/pages/ScenarioManagementPage.jsx, /src/app/pages/LearnerDashboardPage.jsx, /src/app/pages/AdminDashboardPage.jsx, /src/app/pages/NotificationsPage.jsx, /src/app/pages/TrainerDashboardPage.jsx, /src/app/forms/AddScenarioForm.jsx[22m
+[2m2:38:06 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/components/shared/Sidebar.jsx, /src/styles/index.css[22m
+[2m2:38:20 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/App.jsx, /src/styles/index.css[22m
+[2m2:38:21 pm[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/ExploreTrainersPage" from "src/app/App.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mE:/SKILLTRACK/skilltrack-frontend/src/app/App.jsx[39m:26:36
+[33m  39 |  import { AchievementsPage } from "./pages/AchievementsPage";
+  40 |  import { HomePage } from "./pages/HomePage";
+  41 |  import { ExploreTrainersPage } from "./pages/ExploreTrainersPage";
+     |                                       ^
+  42 |  const HOME_PAGE_BY_ROLE = {
+  43 |    learner: "/learner-dashboard",[39m
+      at TransformPluginContext._formatError (file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49258:41)
+      at TransformPluginContext.error (file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49253:16)
+      at normalizeUrl (file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64307:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+      at async file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64439:39
+      at async Promise.all (index 26)
+      at async TransformPluginContext.transform (file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:64366:7)
+      at async PluginContainer.transform (file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///E:/SKILLTRACK/skilltrack-frontend/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m2:39:26 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/LearnerDashboardPage.jsx, /src/styles/index.css[22m
+[2m2:44:59 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/platform/engine/context/AuthContext.jsx, /src/styles/index.css, /src/app/pages/LeaderboardPage.jsx, /src/app/pages/ScenarioManagementPage.jsx, /src/app/pages/AdminDashboardPage.jsx, /src/app/pages/AIFeedbackPage.jsx, /src/app/pages/ProfilePage.jsx, /src/app/pages/TrainerDashboardPage.jsx, /src/app/pages/AnalyticsPage.jsx, /src/app/forms/AddTrainerForm.jsx, /src/app/forms/EditProfileForm.jsx, /src/app/forms/AddLearnerForm.jsx, /src/app/forms/AddScenarioForm.jsx, /src/app/pages/ExploreTrainersPage.jsx[22m
+[2m2:45:00 pm[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/platform/engine/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:45:00 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/platform/engine/context/AuthContext.jsx[22m
+[2m2:45:45 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/ExploreTrainersPage.jsx, /src/styles/index.css[22m
+[2m2:48:15 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/ExploreTrainersPage.jsx, /src/styles/index.css[22m
+[2m2:48:31 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/ExploreTrainersPage.jsx, /src/styles/index.css[22m
+[2m2:57:10 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/platform/engine/context/AuthContext.jsx, /src/styles/index.css, /src/app/pages/LeaderboardPage.jsx, /src/app/pages/ScenarioManagementPage.jsx, /src/app/pages/AdminDashboardPage.jsx, /src/app/pages/AIFeedbackPage.jsx, /src/app/pages/ProfilePage.jsx, /src/app/pages/TrainerDashboardPage.jsx, /src/app/pages/AnalyticsPage.jsx, /src/app/forms/AddTrainerForm.jsx, /src/app/forms/EditProfileForm.jsx, /src/app/forms/AddLearnerForm.jsx, /src/app/forms/AddScenarioForm.jsx, /src/app/pages/ExploreTrainersPage.jsx[22m
+[2m2:57:11 pm[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/platform/engine/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:57:11 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/platform/engine/context/AuthContext.jsx[22m
+[2m3:04:56 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/AIFeedbackPage.jsx, /src/styles/index.css[22m
+[2m3:05:21 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/AnalyticsPage.jsx, /src/styles/index.css[22m
+[2m3:05:49 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/TrainerDashboardPage.jsx, /src/styles/index.css[22m
+[2m3:19:45 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/app/pages/ScenarioManagementPage.jsx, /src/app/pages/LearnerDashboardPage.jsx, /src/app/pages/AdminDashboardPage.jsx, /src/app/pages/NotificationsPage.jsx, /src/app/pages/TrainerDashboardPage.jsx, /src/app/forms/AddScenarioForm.jsx[22m
+[2m3:20:53 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/forms/AddScenarioForm.jsx, /src/styles/index.css[22m
+[2m3:21:05 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/ScenarioManagementPage.jsx, /src/styles/index.css[22m
+[2m3:23:05 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/NotificationsPage.jsx, /src/styles/index.css[22m
+[2m3:23:57 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/NotificationsPage.jsx, /src/styles/index.css[22m
+[2m3:24:51 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/app/pages/NotificationsPage.jsx, /src/styles/index.css[22m
+^C^CTerminate batch job (Y/N)? 

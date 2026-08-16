@@ -1,0 +1,78 @@
+server:
+  port: 19090
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:15173"
+              - "http://127.0.0.1:15173"
+              - "http://localhost:5174"
+              - "http://127.0.0.1:5174"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - PATCH
+            allowedHeaders: "*"
+            allowCredentials: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      routes:
+        # ── User & Auth Service ────────────────────────────────────
+        - id: auth-route
+          uri: lb://user-service
+          predicates:
+            - Path=/api/auth/**
+
+        - id: users-route
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+
+        # ── Simulation Service ─────────────────────────────────────
+        - id: simulations-route
+          uri: lb://simulation-service
+          predicates:
+            - Path=/api/simulations/**
+
+        - id: scenarios-route
+          uri: lb://simulation-service
+          predicates:
+            - Path=/api/scenarios/**
+
+        # ── Attempt & Analytics Service ────────────────────────────
+        - id: attempts-route
+          uri: lb://attempt-analytics-service
+          predicates:
+            - Path=/api/attempts/**
+
+        - id: analytics-route
+          uri: lb://attempt-analytics-service
+          predicates:
+            - Path=/api/analytics/**
+
+        # ── Notification Service ───────────────────────────────────
+        - id: notifications-route
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notifications/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    com.skilltrack: INFO
+    org.springframework.cloud.gateway: INFO

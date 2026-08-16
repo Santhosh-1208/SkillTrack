@@ -1,0 +1,226 @@
+{
+    "simulation_id":  "FIRE_EVAC_003",
+    "title":  "Fire Emergency Response",
+    "branch":  "All",
+    "level":  1,
+    "interaction_pattern":  "pathfinding",
+    "goal":  "Detect, report, safely evacuate and account for all personnel during a simulated workplace fire.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Safety \u0026 HSE",
+    "learning_content":  {
+                             "what":  "Fire emergency response is a structured set of actions from initial detection through to full evacuation and personnel accountability. Smoke inhalation — not burns — is responsible for the majority of fire fatalities, making route selection and acting quickly the top priorities.",
+                             "how":  "Follow RACE: Remove people from danger, Alarm (pull station), Contain (close fire doors), Evacuate/Extinguish. Only attempt to extinguish small, contained fires using the PASS technique (Pull, Aim, Squeeze, Sweep). Always feel a door before opening it — a hot door means fire is on the other side. Stay low in smoke. Always report to the assembly point for headcount."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  180,
+    "sop_steps":  [
+                      {
+                          "step_id":  "FIRE_S1",
+                          "order":  1,
+                          "instruction":  "Identify the fire source and confirm it is not a false alarm.",
+                          "expected_action":  "confirm_fire",
+                          "is_safety_critical":  false,
+                          "hint":  "Look for visible flames, smoke, or a burning smell before proceeding."
+                      },
+                      {
+                          "step_id":  "FIRE_S2",
+                          "order":  2,
+                          "instruction":  "Activate the nearest fire alarm pull station immediately.",
+                          "expected_action":  "pull_alarm",
+                          "is_safety_critical":  true,
+                          "hint":  "Pull the alarm before attempting to fight the fire or alerting others verbally."
+                      },
+                      {
+                          "step_id":  "FIRE_S3",
+                          "order":  3,
+                          "instruction":  "Call emergency services (fire brigade / 101) and report location and fire size.",
+                          "expected_action":  "call_emergency",
+                          "is_safety_critical":  true,
+                          "hint":  "State your building name, floor, and the approximate fire size."
+                      },
+                      {
+                          "step_id":  "FIRE_S4",
+                          "order":  4,
+                          "instruction":  "Assess fire size — only attempt extinguisher use if the fire is smaller than a wastebasket.",
+                          "expected_action":  "assess_fire_size",
+                          "is_safety_critical":  true,
+                          "hint":  "PASS technique: Pull, Aim, Squeeze, Sweep. If unsure, evacuate immediately."
+                      },
+                      {
+                          "step_id":  "FIRE_S5",
+                          "order":  5,
+                          "instruction":  "Alert nearby colleagues verbally and begin guiding them toward the exit.",
+                          "expected_action":  "alert_colleagues",
+                          "is_safety_critical":  false,
+                          "hint":  "Shout \u0027FIRE! Evacuate now!\u0027 and direct them to follow you. Do not wait for stragglers."
+                      },
+                      {
+                          "step_id":  "FIRE_S6",
+                          "order":  6,
+                          "instruction":  "Navigate to the nearest safe fire exit. Feel the door before opening.",
+                          "expected_action":  "navigate_to_exit",
+                          "is_safety_critical":  true,
+                          "hint":  "If the door is hot to the touch, the corridor beyond is on fire. Use the alternative exit."
+                      },
+                      {
+                          "step_id":  "FIRE_S7",
+                          "order":  7,
+                          "instruction":  "Close all fire doors behind you during evacuation to slow fire spread.",
+                          "expected_action":  "close_fire_doors",
+                          "is_safety_critical":  false,
+                          "hint":  "Fire doors are rated to hold back fire for 30–60 minutes. Always close them behind you."
+                      },
+                      {
+                          "step_id":  "FIRE_S8",
+                          "order":  8,
+                          "instruction":  "Report to the designated assembly point and confirm headcount with the fire marshal.",
+                          "expected_action":  "report_to_assembly",
+                          "is_safety_critical":  true,
+                          "hint":  "The assembly point is marked on the site map. Do not re-enter the building."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "FIRE_D1",
+                                "after_step":  "FIRE_S4",
+                                "prompt":  "The fire is the size of a large desk. You have an extinguisher. Do you try to fight it?",
+                                "time_limit_seconds":  30,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Yes, I\u0027ll use the extinguisher to fight it.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "A desk-sized fire is beyond the scope of a portable extinguisher. Risk of being trapped.",
+                                                    "mistake_id":  "FIRE_M_FOUGHT_LARGE_FIRE"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "No, this is too large. Evacuate immediately.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Only attempt extinguishing small, contained fires where you have a clear escape path.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "FIRE_D2",
+                                "after_step":  "FIRE_S6",
+                                "prompt":  "The primary exit route is blocked by heavy smoke. A secondary exit is visible but further away. What do you do?",
+                                "time_limit_seconds":  30,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Run through the smoke quickly — it\u0027s faster.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Smoke inhalation is the leading cause of fire casualties. Even brief exposure can be fatal.",
+                                                    "mistake_id":  "FIRE_M_SMOKE_PATH"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Drop low and crawl to the secondary exit.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Clean air is near the floor. Stay low and take the alternative route.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "FIRE_M_NO_ALARM",
+                                  "type":  "skipped_step",
+                                  "severity":  "critical",
+                                  "description":  "Evacuated without pulling the fire alarm.",
+                                  "consequence":  "Others in the building are left unaware of the fire.",
+                                  "mistake_penalty":  35,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.6,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "FIRE_M_SMOKE_PATH",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Chose to run through smoke-filled corridor.",
+                                  "consequence":  "Extremely high risk of asphyxiation and loss of orientation.",
+                                  "mistake_penalty":  40,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.8
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "FIRE_M_FOUGHT_LARGE_FIRE",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Attempted to use a portable extinguisher on a fire too large to control.",
+                                  "consequence":  "Wasted time and risk of being trapped or overcome by the fire.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5,
+                                                            "Task Knowledge":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "FIRE_M_NO_HEADCOUNT",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Did not report to the assembly point or check in with the fire marshal.",
+                                  "consequence":  "Emergency services may unnecessarily send rescuers back into the building.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.4,
+                                                            "Communication":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "FIRE_M_USED_LIFT",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Used the elevator during the fire evacuation.",
+                                  "consequence":  "Elevators can trap occupants if power fails or smoke enters the shaft.",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.7
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "FIRE_H1",
+                      "related_step":  "FIRE_S6",
+                      "text":  "If you see smoke coming under the door gap, do NOT open it. Use the secondary exit.",
+                      "penalty_if_used":  0
+                  },
+                  {
+                      "hint_id":  "FIRE_H2",
+                      "related_step":  "FIRE_S4",
+                      "text":  "PASS: Pull pin, Aim at base of fire, Squeeze handle, Sweep side to side.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Safety Awareness",
+                         "Procedure Accuracy",
+                         "Task Knowledge",
+                         "Communication"
+                     ],
+    "competency_weights":  {
+                               "Safety Awareness":  0.5,
+                               "Procedure Accuracy":  0.25,
+                               "Task Knowledge":  0.15,
+                               "Communication":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  80,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+
+                             ],
+    "simulation_type":  "PROCEDURAL"
+}

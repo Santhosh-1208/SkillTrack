@@ -1,0 +1,220 @@
+{
+    "simulation_id":  "PREV_MAINT_008",
+    "title":  "Preventive Machine Maintenance",
+    "branch":  "Mechanical",
+    "level":  2,
+    "interaction_pattern":  "checklist",
+    "goal":  "Complete a full preventive maintenance schedule on a production conveyor machine to detect wear and prevent failure.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Mechanical",
+    "learning_content":  {
+                             "what":  "Preventive Maintenance (PM) is a scheduled strategy of inspecting and servicing equipment before failure occurs. Studies show PM reduces unplanned downtime by up to 45% and extends equipment life significantly compared to reactive breakdown maintenance. PM follows a fixed schedule based on time, cycles, or condition readings.",
+                             "how":  "Execute PM from a standardised checklist covering mechanical, electrical, and safety elements in sequence. Record all measurements (temperatures, oil levels, vibration) against known baseline values. Any out-of-spec reading triggers an immediate decision: correct on the spot or raise a corrective work order before returning the machine to service. Never skip a checklist item without a documented justification."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  400,
+    "sop_steps":  [
+                      {
+                          "step_id":  "PM_S1",
+                          "order":  1,
+                          "instruction":  "Review the preventive maintenance schedule and retrieve the machine\u0027s maintenance history log.",
+                          "expected_action":  "review_schedule",
+                          "is_safety_critical":  false,
+                          "hint":  "The PM schedule shows which components are due for inspection and which were flagged in the last service."
+                      },
+                      {
+                          "step_id":  "PM_S2",
+                          "order":  2,
+                          "instruction":  "Inspect the conveyor belt for fraying, edge damage, mis-tracking, and tension.",
+                          "expected_action":  "inspect_belt",
+                          "is_safety_critical":  false,
+                          "hint":  "Check both the carry side and return side. Fraying at the edges often indicates mis-tracking."
+                      },
+                      {
+                          "step_id":  "PM_S3",
+                          "order":  3,
+                          "instruction":  "Check all drive chain and sprocket assemblies for wear, elongation, and adequate lubrication.",
+                          "expected_action":  "inspect_chain_sprocket",
+                          "is_safety_critical":  false,
+                          "hint":  "A worn chain will show \u0027pitch elongation\u0027 — the chain will sag between sprockets more than usual."
+                      },
+                      {
+                          "step_id":  "PM_S4",
+                          "order":  4,
+                          "instruction":  "Check lubrication levels in the main gearbox and bearing housings. Top up if below MIN line.",
+                          "expected_action":  "check_lubrication",
+                          "is_safety_critical":  false,
+                          "hint":  "Use the sight glass or dipstick. Only use the manufacturer-specified oil grade — do not mix types."
+                      },
+                      {
+                          "step_id":  "PM_S5",
+                          "order":  5,
+                          "instruction":  "Inspect all electrical connections and control panel for loose terminals, corrosion, and heat damage.",
+                          "expected_action":  "inspect_electrical",
+                          "is_safety_critical":  true,
+                          "hint":  "Discolored terminals or a burning smell indicate overheating at a connection point."
+                      },
+                      {
+                          "step_id":  "PM_S6",
+                          "order":  6,
+                          "instruction":  "Measure motor operating temperature with a thermal imager while machine is running under load.",
+                          "expected_action":  "measure_motor_temp",
+                          "is_safety_critical":  true,
+                          "hint":  "Aim the thermal gun at the motor casing, not the cooling fins. Normal operating temp is below 80°C."
+                      },
+                      {
+                          "step_id":  "PM_S7",
+                          "order":  7,
+                          "instruction":  "Test all safety interlocks, emergency stops, and guarding switches for correct operation.",
+                          "expected_action":  "test_interlocks",
+                          "is_safety_critical":  true,
+                          "hint":  "Each E-stop must stop the machine within 1 second of activation. A slow stop is a failed interlock."
+                      },
+                      {
+                          "step_id":  "PM_S8",
+                          "order":  8,
+                          "instruction":  "Record all readings and findings in the maintenance log and schedule corrective actions for any issues found.",
+                          "expected_action":  "update_maintenance_log",
+                          "is_safety_critical":  false,
+                          "hint":  "Note both pass and fail results — a record of passing inspections is just as important for traceability."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "PM_D1",
+                                "after_step":  "PM_S6",
+                                "prompt":  "The motor temperature reads 95°C — 15°C above the normal operating range. What is your next step?",
+                                "time_limit_seconds":  60,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Log the reading and continue the rest of the inspection.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Ignoring an overheating motor can lead to winding failure and a catastrophic unplanned shutdown.",
+                                                    "mistake_id":  "PM_M_IGNORED_ABNORMAL"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Initiate a controlled shutdown and investigate the cause before continuing.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Abnormal temperature readings require immediate investigation to prevent equipment damage.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "PM_D2",
+                                "after_step":  "PM_S7",
+                                "prompt":  "One of the E-stop buttons activates but the machine takes 4 seconds to stop instead of the required 1 second. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Note it in the log and continue — it still stops eventually.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "A slow E-stop is a failed safety interlock. The machine must be taken out of service immediately.",
+                                                    "mistake_id":  "PM_M_IGNORED_FAILED_INTERLOCK"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Take the machine out of service and raise a work order for the interlock system.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Any safety interlock that does not meet specification must be repaired before the machine is returned to service.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "PM_M_IGNORED_ABNORMAL",
+                                  "type":  "wrong_choice",
+                                  "severity":  "high",
+                                  "description":  "Learner continued work despite an out-of-spec temperature reading.",
+                                  "consequence":  "Motor continues to overheat and fails, causing unplanned production downtime.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Task Knowledge":  0.4,
+                                                            "Attention to Detail":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "PM_M_IGNORED_FAILED_INTERLOCK",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Failed to take a machine out of service after an E-stop interlock failure.",
+                                  "consequence":  "A worker could be seriously injured if they cannot stop the machine in an emergency.",
+                                  "mistake_penalty":  35,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.6,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "PM_M_SKIPPED_STEP",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Learner skipped a checklist item without justification.",
+                                  "consequence":  "Incomplete preventive maintenance leads to undetected wear and unexpected failures.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.5
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "PM_M_WRONG_OIL",
+                                  "type":  "wrong_action",
+                                  "severity":  "medium",
+                                  "description":  "Added incompatible oil type to the gearbox.",
+                                  "consequence":  "Mixed lubricants can degrade and cause accelerated bearing and gear wear.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Task Knowledge":  0.5,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "PM_H1",
+                      "related_step":  "PM_S6",
+                      "text":  "Normal motor operating temperature is below 80°C. Above 90°C is a clear abnormal reading.",
+                      "penalty_if_used":  2
+                  },
+                  {
+                      "hint_id":  "PM_H2",
+                      "related_step":  "PM_S3",
+                      "text":  "A worn chain is safe to measure — use the \u00273-link elongation\u0027 check against manufacturer spec.",
+                      "penalty_if_used":  3
+                  }
+              ],
+    "competencies":  [
+                         "Task Knowledge",
+                         "Procedure Accuracy",
+                         "Safety Awareness",
+                         "Attention to Detail"
+                     ],
+    "competency_weights":  {
+                               "Task Knowledge":  0.35,
+                               "Procedure Accuracy":  0.3,
+                               "Safety Awareness":  0.25,
+                               "Attention to Detail":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  70,
+                    "time_bonus_enabled":  false
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Task Knowledge",
+                                     "below_score":  65,
+                                     "recommend_simulation_id":  "MOTOR_TROUBLE_006",
+                                     "reason":  "Motor Troubleshooting provides deeper grounding in motor diagnostics and thermal analysis."
+                                 }
+                             ],
+    "simulation_type":  "PROCEDURAL"
+}

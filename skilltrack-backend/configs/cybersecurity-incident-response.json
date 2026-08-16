@@ -1,0 +1,244 @@
+{
+    "simulation_id":  "CYBER_INCIDENT_004",
+    "title":  "Cybersecurity Incident Response",
+    "branch":  "CSE",
+    "level":  3,
+    "interaction_pattern":  "investigative_branching",
+    "goal":  "Detect, contain, and report a suspected security breach on a company workstation while preserving evidence and following the incident-response SLA.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "IT \u0026 DevOps",
+    "learning_content":  {
+                             "what":  "Cybersecurity Incident Response (IR) is a structured approach to handling security breaches, malware infections, and system compromises. The NIST IR framework defines six phases: Preparation → Detection → Containment → Eradication → Recovery → Lessons Learned. The average cost of a data breach is $4.45 million — fast, correct response directly limits this damage.",
+                             "how":  "On alert: contain first (network isolate the machine without powering it off) → collect volatile evidence (memory snapshot) → investigate (review logs and running processes) → escalate to the IR lead with findings → remediate only after receiving approval → file a full incident report. Never shut down a compromised machine — RAM evidence (running processes, encryption keys, open network connections) is permanently lost on power-off."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  600,
+    "sop_steps":  [
+                      {
+                          "step_id":  "CY_S1",
+                          "order":  1,
+                          "instruction":  "Acknowledge the security alert within SLA.",
+                          "expected_action":  "acknowledge_alert",
+                          "is_safety_critical":  false,
+                          "hint":  "SLA clock starts the moment the alert fires."
+                      },
+                      {
+                          "step_id":  "CY_S2",
+                          "order":  2,
+                          "instruction":  "Isolate the affected machine from the network (do not power off).",
+                          "expected_action":  "isolate_from_network",
+                          "is_safety_critical":  true,
+                          "hint":  "Disconnect network access, but keep the machine running to preserve volatile memory evidence."
+                      },
+                      {
+                          "step_id":  "CY_S3",
+                          "order":  3,
+                          "instruction":  "Capture a memory/process snapshot before any further action.",
+                          "expected_action":  "capture_snapshot",
+                          "is_safety_critical":  true,
+                          "hint":  "This is your only chance to capture volatile evidence."
+                      },
+                      {
+                          "step_id":  "CY_S4",
+                          "order":  4,
+                          "instruction":  "Review recent process list and network connection logs for anomalies.",
+                          "expected_action":  "review_logs",
+                          "is_safety_critical":  false,
+                          "hint":  "Look for unfamiliar outbound connections or unsigned processes."
+                      },
+                      {
+                          "step_id":  "CY_S5",
+                          "order":  5,
+                          "instruction":  "Identify the likely malicious process/file based on log evidence.",
+                          "expected_action":  "identify_threat",
+                          "is_safety_critical":  false,
+                          "hint":  null
+                      },
+                      {
+                          "step_id":  "CY_S6",
+                          "order":  6,
+                          "instruction":  "Escalate to the incident response lead with a summary of findings.",
+                          "expected_action":  "escalate_findings",
+                          "is_safety_critical":  false,
+                          "hint":  "Include what was found, when, and containment actions already taken."
+                      },
+                      {
+                          "step_id":  "CY_S7",
+                          "order":  7,
+                          "instruction":  "Begin remediation only after escalation is acknowledged.",
+                          "expected_action":  "begin_remediation",
+                          "is_safety_critical":  true,
+                          "hint":  null
+                      },
+                      {
+                          "step_id":  "CY_S8",
+                          "order":  8,
+                          "instruction":  "File the incident report documenting timeline and evidence chain.",
+                          "expected_action":  "file_incident_report",
+                          "is_safety_critical":  false,
+                          "hint":  null
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "CY_D1",
+                                "after_step":  "CY_S1",
+                                "prompt":  "You suspect active malware. What is your first containment action?",
+                                "time_limit_seconds":  60,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Power off the machine immediately",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Powering off destroys volatile memory evidence needed for investigation.",
+                                                    "mistake_id":  "CY_M_POWERED_OFF"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Disconnect the machine from the network but leave it running",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — this contains the threat while preserving evidence.",
+                                                    "mistake_id":  null
+                                                },
+                                                {
+                                                    "option_id":  "C",
+                                                    "text":  "Ignore it and keep monitoring for now",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Delaying containment allows the threat to spread or exfiltrate more data.",
+                                                    "mistake_id":  "CY_M_DELAYED_CONTAINMENT"
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "CY_D2",
+                                "after_step":  "CY_S5",
+                                "prompt":  "You\u0027ve identified the malicious process. Do you remediate immediately or escalate first?",
+                                "time_limit_seconds":  90,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Kill the process and delete the file right away",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Acting without escalation can destroy evidence needed for a full investigation and bypasses required sign-off.",
+                                                    "mistake_id":  "CY_M_SKIPPED_ESCALATION"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Escalate to the incident response lead first, then remediate on approval",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — escalation ensures proper evidence handling and coordinated response.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "CY_M_POWERED_OFF",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Learner powered off a compromised machine instead of isolating it.",
+                                  "consequence":  "Loss of volatile memory evidence (running processes, open connections, encryption keys in RAM).",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Evidence Handling":  0.5,
+                                                            "Problem Solving":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CY_M_DELAYED_CONTAINMENT",
+                                  "type":  "timeout",
+                                  "severity":  "high",
+                                  "description":  "Learner delayed containment action after detecting a likely active threat.",
+                                  "consequence":  "Extended dwell time allows lateral movement or data exfiltration.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Time Management":  0.4,
+                                                            "Problem Solving":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CY_M_SKIPPED_ESCALATION",
+                                  "type":  "skipped_step",
+                                  "severity":  "high",
+                                  "description":  "Learner remediated the threat without escalating to the response lead first.",
+                                  "consequence":  "Bypasses required sign-off and can destroy evidence needed for full investigation or legal follow-up.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Communication":  0.4,
+                                                            "Evidence Handling":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CY_M_MISSED_SNAPSHOT",
+                                  "type":  "skipped_step",
+                                  "severity":  "high",
+                                  "description":  "Learner skipped capturing a memory/process snapshot before taking further action.",
+                                  "consequence":  "Volatile evidence is lost permanently once the system state changes.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Evidence Handling":  0.5
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CY_M_SLA_TIMEOUT",
+                                  "type":  "timeout",
+                                  "severity":  "medium",
+                                  "description":  "Learner did not complete the response within the incident SLA window.",
+                                  "consequence":  "SLA breaches have real contractual and regulatory consequences in industry settings.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Time Management":  0.4
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "CY_H1",
+                      "related_step":  "CY_S2",
+                      "text":  "Isolation = network disconnect, not shutdown. Keep it running.",
+                      "penalty_if_used":  3
+                  },
+                  {
+                      "hint_id":  "CY_H2",
+                      "related_step":  "CY_S6",
+                      "text":  "A good escalation summary answers: what, when, impact so far, actions taken.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Evidence Handling",
+                         "Problem Solving",
+                         "Time Management",
+                         "Communication"
+                     ],
+    "competency_weights":  {
+                               "Evidence Handling":  0.35,
+                               "Problem Solving":  0.3,
+                               "Time Management":  0.2,
+                               "Communication":  0.15
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Problem Solving",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "CNC_SETUP_003",
+                                     "reason":  "CNC Setup builds structured diagnostic thinking (clearance/offset troubleshooting) transferable to investigative tasks."
+                                 },
+                                 {
+                                     "if_competency":  "Communication",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "ELECTRICAL_PANEL_002",
+                                     "reason":  "Electrical Panel Maintenance also scores coordination in group lockout scenarios."
+                                 }
+                             ],
+    "simulation_type":  "TERMINAL"
+}

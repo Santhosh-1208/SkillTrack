@@ -1,0 +1,213 @@
+{
+    "simulation_id":  "HYDRAULIC_DIAG_009",
+    "title":  "Hydraulic/Pneumatic System Diagnosis",
+    "branch":  "Mechanical",
+    "level":  3,
+    "interaction_pattern":  "physics_solver",
+    "goal":  "Diagnose pressure drops and flow restrictions in a fluid power network using systematic isolation and Darcy-Weisbach analysis.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Mechanical",
+    "learning_content":  {
+                             "what":  "Hydraulic systems transmit force using pressurised fluid. Faults manifest as pressure drops, sluggish actuators, overheating oil, or excessive noise. The Darcy-Weisbach equation governs pressure loss in fluid lines, meaning leaks, blockages, and worn valve seats all create measurable signatures at system gauges that can be traced systematically.",
+                             "how":  "Begin diagnosis at the pump (the highest-pressure point) and work downstream. Use systematic branch isolation: close one branch at a time with isolation valves and observe system pressure response. A pressure rise indicates flow was leaving through that branch. A flow meter quantifies internal leakage through worn seals. Always consult the hydraulic schematic before touching any valve — the wrong valve closed at the wrong time can cause a dangerous pressure spike."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  600,
+    "sop_steps":  [
+                      {
+                          "step_id":  "HYD_S1",
+                          "order":  1,
+                          "instruction":  "Review the hydraulic schematic to understand the circuit topology (pump, valves, actuator, relief valve locations).",
+                          "expected_action":  "review_schematic",
+                          "is_safety_critical":  false,
+                          "hint":  "Identify Pump P1, Branch A (Valve V1 → Actuator A1), Branch B (Valve V2 → Actuator A2), and the main relief valve RV1."
+                      },
+                      {
+                          "step_id":  "HYD_S2",
+                          "order":  2,
+                          "instruction":  "Check the system at rest: verify reservoir oil level and pump case drain temperature.",
+                          "expected_action":  "check_reservoir",
+                          "is_safety_critical":  false,
+                          "hint":  "Low oil level causes cavitation. Case drain temperature above 70°C indicates pump wear."
+                      },
+                      {
+                          "step_id":  "HYD_S3",
+                          "order":  3,
+                          "instruction":  "Run the system and record the main pump output pressure at gauge G1.",
+                          "expected_action":  "check_pump_gauge",
+                          "is_safety_critical":  false,
+                          "hint":  "The system should rest at 3000 PSI (207 bar). Significant deviation indicates a fault."
+                      },
+                      {
+                          "step_id":  "HYD_S4",
+                          "order":  4,
+                          "instruction":  "Record actuator A1 and A2 operating pressures under normal load at gauges G2 and G3.",
+                          "expected_action":  "record_actuator_pressures",
+                          "is_safety_critical":  false,
+                          "hint":  "Normal actuator pressure should be 10–15% below pump pressure due to line losses."
+                      },
+                      {
+                          "step_id":  "HYD_S5",
+                          "order":  5,
+                          "instruction":  "Isolate Branch A by closing Valve V1 and observe how system pressure responds.",
+                          "expected_action":  "close_valve_v1",
+                          "is_safety_critical":  false,
+                          "hint":  "If pressure rises when V1 is closed, Branch A was consuming flow — it is the source of the pressure drop."
+                      },
+                      {
+                          "step_id":  "HYD_S6",
+                          "order":  6,
+                          "instruction":  "With V1 closed, observe Actuator A2 pressure at G3 to isolate Branch B performance.",
+                          "expected_action":  "check_actuator_pressure",
+                          "is_safety_critical":  false,
+                          "hint":  "If Branch B pressure also drops now, the fault is upstream of both branches (pump or relief valve)."
+                      },
+                      {
+                          "step_id":  "HYD_S7",
+                          "order":  7,
+                          "instruction":  "Perform a flow meter test across each suspected component to quantify internal leakage.",
+                          "expected_action":  "flow_meter_test",
+                          "is_safety_critical":  false,
+                          "hint":  "A flow meter shows if more fluid is going in than coming out — the difference is internal leakage through worn seals."
+                      },
+                      {
+                          "step_id":  "HYD_S8",
+                          "order":  8,
+                          "instruction":  "Based on all readings, identify the root cause, record findings, and tag the faulty component for repair.",
+                          "expected_action":  "identify_and_tag",
+                          "is_safety_critical":  false,
+                          "hint":  "Use a logic fault tree: is the fault upstream (pump/relief) or downstream (valves/actuators)?"
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "HYD_D1",
+                                "after_step":  "HYD_S5",
+                                "prompt":  "Closing V1 causes system pressure to spike above the relief valve setting of 3300 PSI. What does this indicate?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "The relief valve RV1 is stuck closed and not relieving pressure.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "The relief valve IS operating — it is venting the excess pressure. If it were stuck, pressure would keep rising.",
+                                                    "mistake_id":  "HYD_M_WRONG_DIAGNOSIS"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Branch B is completely blocked (deadhead), forcing all pump flow over the relief valve.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Closing V1 and finding no flow path causes a deadhead — the pump recirculates entirely through RV1.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "HYD_D2",
+                                "after_step":  "HYD_S3",
+                                "prompt":  "The pump pressure gauge reads only 1800 PSI at rest instead of 3000 PSI. What is the most likely cause?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Relief valve is stuck open, bleeding pressure back to tank.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. A stuck-open relief valve is the most common cause of low system pressure at rest.",
+                                                    "mistake_id":  null
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "The pressure gauge is faulty.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Possible, but gauge failure should be confirmed by cross-referencing with a second gauge before replacing the relief valve.",
+                                                    "mistake_id":  "HYD_M_ASSUMED_GAUGE_FAULT"
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "HYD_M_WRONG_DIAGNOSIS",
+                                  "type":  "wrong_choice",
+                                  "severity":  "high",
+                                  "description":  "Misidentified the hydraulic system behaviour, leading to the wrong component diagnosis.",
+                                  "consequence":  "Replacing the wrong component wastes time, money, and leaves the real fault unresolved.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Task Knowledge":  0.7,
+                                                            "Problem Solving":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "HYD_M_DID_NOT_ISOLATE",
+                                  "type":  "procedure_error",
+                                  "severity":  "medium",
+                                  "description":  "Attempted diagnosis without systematically isolating branches.",
+                                  "consequence":  "Readings in a parallel circuit are inconclusive without isolation, leading to misdiagnosis.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.5,
+                                                            "Task Knowledge":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "HYD_M_ASSUMED_GAUGE_FAULT",
+                                  "type":  "wrong_choice",
+                                  "severity":  "medium",
+                                  "description":  "Assumed gauge failure without cross-verifying with a second gauge or transducer.",
+                                  "consequence":  "Leads to replacing a functional gauge while the actual fault (relief valve) remains.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Problem Solving":  0.4,
+                                                            "Task Knowledge":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "HYD_M_NO_SCHEMATIC",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Began diagnosis without reviewing the hydraulic schematic.",
+                                  "consequence":  "Risk of misidentifying circuit topology and closing the wrong valves.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.4
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "HYD_H1",
+                      "related_step":  "HYD_S5",
+                      "text":  "Turn the valve handle perpendicular to the pipe direction to close it.",
+                      "penalty_if_used":  2
+                  },
+                  {
+                      "hint_id":  "HYD_H2",
+                      "related_step":  "HYD_S3",
+                      "text":  "Always record baseline pressures BEFORE isolating any branches — you need a reference point.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Task Knowledge",
+                         "Procedure Accuracy",
+                         "Problem Solving"
+                     ],
+    "competency_weights":  {
+                               "Task Knowledge":  0.5,
+                               "Procedure Accuracy":  0.3,
+                               "Problem Solving":  0.2
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  70,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+
+                             ],
+    "simulation_type":  "VISUAL"
+}

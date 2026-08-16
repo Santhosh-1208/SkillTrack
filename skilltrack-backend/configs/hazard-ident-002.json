@@ -1,0 +1,215 @@
+{
+    "simulation_id":  "HAZARD_IDENT_002",
+    "title":  "Workplace Hazard Identification",
+    "branch":  "All",
+    "level":  1,
+    "interaction_pattern":  "cv_detection",
+    "goal":  "Systematically survey and report all unsafe conditions and hazards in a factory workspace.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Safety \u0026 HSE",
+    "learning_content":  {
+                             "what":  "Hazard identification is the process of recognising workplace conditions that could cause injury or illness. It is the first and most critical step in a risk assessment cycle. Unidentified hazards cannot be controlled — they become incidents waiting to happen.",
+                             "how":  "Use a zone-by-zone checklist to ensure no area is skipped. Categorise hazards by type: physical (trip, impact), chemical (spill, fume), and safety systems (blocked exits, faulty guards). Rate each hazard by severity and likelihood. Raise immediate corrective actions for critical findings. Log everything — documented hazards can be tracked, corrected, and audited."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  300,
+    "sop_steps":  [
+                      {
+                          "step_id":  "HAZ_S1",
+                          "order":  1,
+                          "instruction":  "Obtain the area hazard identification checklist before starting the inspection.",
+                          "expected_action":  "get_checklist",
+                          "is_safety_critical":  false,
+                          "hint":  "The checklist is at the safety station near the area entrance. It organizes your inspection into zones."
+                      },
+                      {
+                          "step_id":  "HAZ_S2",
+                          "order":  2,
+                          "instruction":  "Scan the floor area for slip, trip, and fall hazards including spills, loose cables, and misplaced tools.",
+                          "expected_action":  "identify_floor_hazards",
+                          "is_safety_critical":  false,
+                          "hint":  "Walk the full perimeter first, then check the center. Look for wet floor signs that may be missing."
+                      },
+                      {
+                          "step_id":  "HAZ_S3",
+                          "order":  3,
+                          "instruction":  "Inspect all emergency exits — confirm they are unobstructed, clearly signed, and unlocked.",
+                          "expected_action":  "check_exits",
+                          "is_safety_critical":  true,
+                          "hint":  "Any storage, pallets, or equipment blocking the exit path must be immediately removed."
+                      },
+                      {
+                          "step_id":  "HAZ_S4",
+                          "order":  4,
+                          "instruction":  "Inspect all fire extinguishers: verify pressure gauge is in the green zone, pin is intact, and inspection tag is current.",
+                          "expected_action":  "check_extinguishers",
+                          "is_safety_critical":  true,
+                          "hint":  "If the inspection tag is more than 12 months old, the extinguisher is overdue for service."
+                      },
+                      {
+                          "step_id":  "HAZ_S5",
+                          "order":  5,
+                          "instruction":  "Inspect all machinery — look for missing safety guards, exposed rotating parts, and warning labels.",
+                          "expected_action":  "inspect_guards",
+                          "is_safety_critical":  true,
+                          "hint":  "All rotating parts (belts, gears, shafts) must be enclosed by a physical guard."
+                      },
+                      {
+                          "step_id":  "HAZ_S6",
+                          "order":  6,
+                          "instruction":  "Check chemical storage area for proper labeling, SDS availability, and segregation of incompatibles.",
+                          "expected_action":  "check_chemical_storage",
+                          "is_safety_critical":  true,
+                          "hint":  "Flammables and oxidizers must be stored separately. Each container must have an MSDS/SDS sheet accessible."
+                      },
+                      {
+                          "step_id":  "HAZ_S7",
+                          "order":  7,
+                          "instruction":  "Verify adequate lighting in all inspection zones, including emergency lighting units.",
+                          "expected_action":  "check_lighting",
+                          "is_safety_critical":  false,
+                          "hint":  "Emergency lighting units have a test button. Push it to verify the backup battery activates the lights."
+                      },
+                      {
+                          "step_id":  "HAZ_S8",
+                          "order":  8,
+                          "instruction":  "Record all identified hazards in the incident reporting system with a severity rating and corrective action.",
+                          "expected_action":  "log_hazards",
+                          "is_safety_critical":  false,
+                          "hint":  "Critical hazards (blocked exits, missing guards) must trigger immediate corrective action, not just a report."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "HAZ_D1",
+                                "after_step":  "HAZ_S3",
+                                "prompt":  "You spot a pallet of boxes temporarily placed in front of a fire exit door. What is your immediate action?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Note it in the report for the next safety meeting.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "A blocked exit is an immediate critical hazard — it cannot wait for a scheduled meeting.",
+                                                    "mistake_id":  "HAZ_M_DELAYED_ACTION"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Immediately move the pallet or call someone to move it now.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Emergency exits must be clear at all times. This is a critical hazard requiring immediate action.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "HAZ_D2",
+                                "after_step":  "HAZ_S6",
+                                "prompt":  "You find two unlabeled chemical containers stored together. What should you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Assume they are the same chemical and leave them.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Unknown chemicals stored together may be incompatible and cause a violent reaction.",
+                                                    "mistake_id":  "HAZ_M_UNLABELED_CHEMICAL"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Segregate the containers and tag them \u0027Unknown — Do Not Use\u0027 until identified.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Unidentified chemicals must be isolated and reported to the supervisor for identification.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "HAZ_M_DELAYED_ACTION",
+                                  "type":  "wrong_choice",
+                                  "severity":  "critical",
+                                  "description":  "Failed to take immediate action on a critical hazard (blocked exit).",
+                                  "consequence":  "Leaves the hazard active, endangering all personnel in the area.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.6,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "HAZ_M_MISSED_HAZARD",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Failed to identify a clearly visible hazard during the inspection.",
+                                  "consequence":  "Unidentified hazards remain active and lead to future incidents.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Attention to Detail":  0.6,
+                                                            "Safety Awareness":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "HAZ_M_UNLABELED_CHEMICAL",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Ignored unlabeled chemical containers.",
+                                  "consequence":  "Incompatible chemicals stored together can cause fire, explosion, or toxic gas release.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5,
+                                                            "Task Knowledge":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "HAZ_M_NO_LOG",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Completed inspection without logging any findings.",
+                                  "consequence":  "Hazards that are not documented cannot be tracked, corrected, or audited.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.6
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "HAZ_H1",
+                      "related_step":  "HAZ_S2",
+                      "text":  "Pay close attention to floor areas near chemical storage — spills may not be visible from a distance.",
+                      "penalty_if_used":  2
+                  },
+                  {
+                      "hint_id":  "HAZ_H2",
+                      "related_step":  "HAZ_S4",
+                      "text":  "The green zone on a fire extinguisher pressure gauge is between the two red lines.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Safety Awareness",
+                         "Attention to Detail",
+                         "Procedure Accuracy",
+                         "Task Knowledge"
+                     ],
+    "competency_weights":  {
+                               "Safety Awareness":  0.45,
+                               "Attention to Detail":  0.3,
+                               "Procedure Accuracy":  0.15,
+                               "Task Knowledge":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  false
+                },
+    "recommendation_rules":  [
+
+                             ],
+    "simulation_type":  "VISUAL"
+}

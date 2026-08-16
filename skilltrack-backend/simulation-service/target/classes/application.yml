@@ -1,0 +1,23 @@
+server:
+  port: 18082
+
+spring:
+  application:
+    name: simulation-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/skilltrackv1
+
+skilltrack:
+  config-path: D:/SkillTrackv2.0/skilltrack-backend/configs
+
+logging:
+  level:
+    com.skilltrack: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
+  instance:
+    prefer-ip-address: true

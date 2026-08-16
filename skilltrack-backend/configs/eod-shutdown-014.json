@@ -1,0 +1,214 @@
+{
+    "simulation_id":  "EOD_SHUTDOWN_014",
+    "title":  "End-of-Day Resource Shutdown Procedure",
+    "branch":  "CSE/IT",
+    "level":  1,
+    "interaction_pattern":  "sandbox",
+    "goal":  "Safely identify and terminate all non-essential development resources at end-of-day without impacting production systems.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "IT \u0026 DevOps",
+    "learning_content":  {
+                             "what":  "End-of-day resource management is an operational discipline that prevents unnecessary cloud compute cost while protecting production systems from accidental interference. In cloud environments, idle development and staging resources can represent 30–40% of monthly infrastructure spend if not shut down after hours.",
+                             "how":  "Always cross-reference any resource you plan to stop against an approved production services list before acting. Use `docker stop` (SIGTERM) rather than `docker kill` for graceful shutdown. Communicate the planned shutdown to the team beforehand. Log every action with a timestamp and your name. When in doubt about a resource — especially if its name contains \u0027prod\u0027 — escalate to a senior engineer rather than guess."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  300,
+    "sop_steps":  [
+                      {
+                          "step_id":  "EOD_S1",
+                          "order":  1,
+                          "instruction":  "Check the environment manifest or tagging system to understand what is running in this environment.",
+                          "expected_action":  "review_manifest",
+                          "is_safety_critical":  false,
+                          "hint":  "Look for an `env-manifest.yaml` or read resource tags in the infrastructure console."
+                      },
+                      {
+                          "step_id":  "EOD_S2",
+                          "order":  2,
+                          "instruction":  "List all running Docker containers with `docker ps` and identify which ones are tagged as \u0027dev\u0027 or \u0027staging\u0027.",
+                          "expected_action":  "list_containers",
+                          "is_safety_critical":  false,
+                          "hint":  "Container names and labels tell you their role. Look for \u0027dev\u0027, \u0027staging\u0027, \u0027test\u0027 in the name."
+                      },
+                      {
+                          "step_id":  "EOD_S3",
+                          "order":  3,
+                          "instruction":  "List all running system processes with `ps aux` or `htop` and identify non-essential background jobs.",
+                          "expected_action":  "list_processes",
+                          "is_safety_critical":  false,
+                          "hint":  "Look for process names like \u0027data_sync\u0027, \u0027report_gen\u0027 or \u0027benchmark_runner\u0027 that may be development tasks."
+                      },
+                      {
+                          "step_id":  "EOD_S4",
+                          "order":  4,
+                          "instruction":  "Cross-reference identified processes against the approved \u0027always-on\u0027 production services list.",
+                          "expected_action":  "cross_reference_prod_list",
+                          "is_safety_critical":  true,
+                          "hint":  "The approved production services list is at /etc/skilltrack/prod-services.txt. Any service NOT on the list is fair game to stop."
+                      },
+                      {
+                          "step_id":  "EOD_S5",
+                          "order":  5,
+                          "instruction":  "Stop identified development databases (redis-dev, postgres-staging) using `docker stop` gracefully.",
+                          "expected_action":  "stop_dev_db",
+                          "is_safety_critical":  false,
+                          "hint":  "Use `docker stop \u003ccontainer\u003e` rather than `docker kill` — it sends SIGTERM first for clean shutdown."
+                      },
+                      {
+                          "step_id":  "EOD_S6",
+                          "order":  6,
+                          "instruction":  "Terminate identified non-essential background jobs using `kill \u003cPID\u003e` (SIGTERM, not SIGKILL).",
+                          "expected_action":  "terminate_jobs",
+                          "is_safety_critical":  false,
+                          "hint":  "SIGTERM allows the process to save state. Only use SIGKILL (kill -9) if SIGTERM doesn\u0027t work."
+                      },
+                      {
+                          "step_id":  "EOD_S7",
+                          "order":  7,
+                          "instruction":  "Verify that all production services are still running correctly after your changes.",
+                          "expected_action":  "verify_prod_services",
+                          "is_safety_critical":  true,
+                          "hint":  "Re-run `docker ps` and check that production containers (labeled \u0027prod\u0027) are still up and healthy."
+                      },
+                      {
+                          "step_id":  "EOD_S8",
+                          "order":  8,
+                          "instruction":  "Log the shutdown activity: what was stopped, by whom, and at what time — in the team\u0027s ops log.",
+                          "expected_action":  "log_shutdown",
+                          "is_safety_critical":  false,
+                          "hint":  "This log is critical if a production issue is discovered overnight that traces back to what you shut down."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "EOD_D1",
+                                "after_step":  "EOD_S3",
+                                "prompt":  "You see a process named `data_sync_job_prod` consuming high CPU. It is not in the team\u0027s approved list. Do you kill it?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Yes — it\u0027s not on the approved list so it should be stopped.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "The \u0027prod\u0027 suffix in the name indicates it is a production job. Killing it causes a production data sync failure.",
+                                                    "mistake_id":  "EOD_M_KILLED_PROD"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "No — the \u0027prod\u0027 label is a red flag. Escalate to a senior engineer before touching it.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. When in doubt about a production resource, always escalate rather than act unilaterally.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "EOD_D2",
+                                "after_step":  "EOD_S5",
+                                "prompt":  "After stopping postgres-staging, a co-worker messages you saying they needed that database for an overnight batch job. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Apologise and say they should have told me.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Blaming others is not productive. Your EOD process should include communicating the shutdown to the team.",
+                                                    "mistake_id":  "EOD_M_NO_COMMUNICATION"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Restart postgres-staging immediately and update the EOD process to notify the team next time.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Restore the required resource and improve the process to prevent this in future.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "EOD_M_KILLED_PROD",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Terminated a production resource without authorization.",
+                                  "consequence":  "Causes production data loss or outage.",
+                                  "mistake_penalty":  40,
+                                  "competency_impact":  {
+                                                            "System Admin":  0.5,
+                                                            "Attention to Detail":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EOD_M_LEFT_DEV_RUNNING",
+                                  "type":  "skipped_step",
+                                  "severity":  "low",
+                                  "description":  "Left development/staging resources running unnecessarily.",
+                                  "consequence":  "Wasted cloud compute costs and potential licensing violations.",
+                                  "mistake_penalty":  5,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EOD_M_NO_COMMUNICATION",
+                                  "type":  "wrong_choice",
+                                  "severity":  "medium",
+                                  "description":  "Shut down resources without notifying the team.",
+                                  "consequence":  "Unexpected downtime for colleagues who needed those resources.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Collaboration":  0.5,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EOD_M_NO_LOG",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Did not log what was shut down.",
+                                  "consequence":  "No audit trail if a production issue arises overnight and root-cause analysis is needed.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.5
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "EOD_H1",
+                      "related_step":  "EOD_S2",
+                      "text":  "Run `docker ps --filter name=dev` to filter only development containers.",
+                      "penalty_if_used":  2
+                  },
+                  {
+                      "hint_id":  "EOD_H2",
+                      "related_step":  "EOD_S4",
+                      "text":  "If a process name contains \u0027prod\u0027, \u0027prd\u0027, or \u0027production\u0027 — treat it as a production resource.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "System Admin",
+                         "Attention to Detail",
+                         "Procedure Accuracy",
+                         "Collaboration"
+                     ],
+    "competency_weights":  {
+                               "System Admin":  0.4,
+                               "Attention to Detail":  0.3,
+                               "Procedure Accuracy":  0.2,
+                               "Collaboration":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  80,
+                    "time_bonus_enabled":  false
+                },
+    "recommendation_rules":  [
+
+                             ],
+    "simulation_type":  "TERMINAL"
+}

@@ -1,0 +1,23 @@
+server:
+  port: 18083
+
+spring:
+  application:
+    name: attempt-analytics-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/skilltrackv1
+
+skilltrack:
+  ai-service-url: http://localhost:18001
+
+logging:
+  level:
+    com.skilltrack: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
+  instance:
+    prefer-ip-address: true

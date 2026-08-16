@@ -1,0 +1,215 @@
+{
+    "simulation_id":  "UBUNTU_MGMT_011",
+    "title":  "Ubuntu Production Server Management",
+    "branch":  "CSE/IT",
+    "level":  2,
+    "interaction_pattern":  "sandbox",
+    "goal":  "Diagnose high CPU load on a production Ubuntu server, identify the failing service, resolve the issue, and document the incident.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "IT \u0026 DevOps",
+    "learning_content":  {
+                             "what":  "Ubuntu server administration is a core skill for any operations or DevOps engineer. Linux runs the majority of global internet infrastructure. High CPU consumption, failing services, and log analysis are the most common day-to-day operational challenges. Every production incident has a root cause that can be found with the right diagnostic sequence.",
+                             "how":  "Follow a top-down approach: check system load (uptime) → identify the process (top/htop) → check service status (systemctl) → review journal logs (journalctl) → check resource limits (disk, memory, file descriptors). Always use `systemctl restart` for graceful service recovery. Only use `kill -9` as a last resort when a process is completely unresponsive to SIGTERM."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  400,
+    "sop_steps":  [
+                      {
+                          "step_id":  "UB_S1",
+                          "order":  1,
+                          "instruction":  "Check system uptime and load average using the `uptime` command.",
+                          "expected_action":  "check_uptime",
+                          "is_safety_critical":  false,
+                          "hint":  "Load average values above your CPU core count indicate sustained overload. E.g. 4.5 on a 4-core system is at limit."
+                      },
+                      {
+                          "step_id":  "UB_S2",
+                          "order":  2,
+                          "instruction":  "Run `top` or `htop` and identify the process consuming the most CPU.",
+                          "expected_action":  "identify_high_cpu",
+                          "is_safety_critical":  false,
+                          "hint":  "In top, press \u0027P\u0027 to sort by CPU usage. Note the process name and PID."
+                      },
+                      {
+                          "step_id":  "UB_S3",
+                          "order":  3,
+                          "instruction":  "Check the systemd service status for the identified process using `systemctl status \u003cservice\u003e`.",
+                          "expected_action":  "check_service_status",
+                          "is_safety_critical":  false,
+                          "hint":  "systemctl status will show you if the service is active, failed, or in a restart loop."
+                      },
+                      {
+                          "step_id":  "UB_S4",
+                          "order":  4,
+                          "instruction":  "Review the journal logs for the service using `journalctl -u \u003cservice\u003e --since \u002710 min ago\u0027`.",
+                          "expected_action":  "check_journal",
+                          "is_safety_critical":  false,
+                          "hint":  "Look for repeated error patterns, infinite loop messages, or OOM (out of memory) kill events."
+                      },
+                      {
+                          "step_id":  "UB_S5",
+                          "order":  5,
+                          "instruction":  "Check disk usage with `df -h` and memory usage with `free -m` to rule out resource exhaustion.",
+                          "expected_action":  "check_disk_memory",
+                          "is_safety_critical":  false,
+                          "hint":  "A full disk (/var/log or /tmp) can cause services to crash in a loop, creating apparent high CPU."
+                      },
+                      {
+                          "step_id":  "UB_S6",
+                          "order":  6,
+                          "instruction":  "Gracefully restart the failing service using `systemctl restart \u003cservice\u003e`.",
+                          "expected_action":  "restart_service",
+                          "is_safety_critical":  true,
+                          "hint":  "Use `systemctl restart`, not `kill -9`. A graceful restart allows the service to clean up connections."
+                      },
+                      {
+                          "step_id":  "UB_S7",
+                          "order":  7,
+                          "instruction":  "Verify the service is running correctly after the restart using `systemctl status` and monitor CPU for 2 minutes.",
+                          "expected_action":  "verify_service_restored",
+                          "is_safety_critical":  false,
+                          "hint":  "Watch for the service entering a crash-restart loop — if it fails again within 60 seconds, the root cause is not resolved."
+                      },
+                      {
+                          "step_id":  "UB_S8",
+                          "order":  8,
+                          "instruction":  "Document the incident: timestamp, affected service, root cause, action taken, and resolution time.",
+                          "expected_action":  "document_incident",
+                          "is_safety_critical":  false,
+                          "hint":  "Log your findings in the incident management system. Even a minor outage requires a brief post-mortem note."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "UB_D1",
+                                "after_step":  "UB_S4",
+                                "prompt":  "The nginx logs show it is stuck in an infinite redirect loop, consuming 99% CPU. Do you use `kill -9` to force-kill it?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Yes — kill -9 forces it to stop immediately.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "SIGKILL does not allow graceful shutdown, abruptly dropping all active user connections and potentially corrupting state.",
+                                                    "mistake_id":  "UB_M_SIGKILL"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "No — use `systemctl restart nginx` for a graceful restart.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Graceful restarts use SIGTERM first, allowing the service to close connections cleanly.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "UB_D2",
+                                "after_step":  "UB_S7",
+                                "prompt":  "After restart, nginx fails again within 30 seconds with \u0027too many open files\u0027 error. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Restart it again and hope for the best.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "The service will keep failing. Restarting without fixing the root cause is not a resolution.",
+                                                    "mistake_id":  "UB_M_NO_ROOT_CAUSE"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Investigate and increase the open file descriptor limit in the service config (LimitNOFILE).",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. \u0027Too many open files\u0027 is a kernel ulimit issue. The fix is to raise LimitNOFILE in the systemd service unit.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "UB_M_SIGKILL",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Used `kill -9` on a production service unnecessarily.",
+                                  "consequence":  "Abruptly dropped all active client connections and potentially corrupted in-progress request state.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "System Admin":  0.6,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "UB_M_WRONG_SERVICE",
+                                  "type":  "procedure_error",
+                                  "severity":  "high",
+                                  "description":  "Restarted the wrong service.",
+                                  "consequence":  "Causes an unrelated production outage while the real high-CPU service remains unresolved.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "System Admin":  0.7,
+                                                            "Attention to Detail":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "UB_M_NO_ROOT_CAUSE",
+                                  "type":  "wrong_choice",
+                                  "severity":  "medium",
+                                  "description":  "Resolved the symptom (restarted service) without investigating the underlying root cause.",
+                                  "consequence":  "The service will fail again, causing recurrent incidents.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Problem Solving":  0.6,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "UB_M_NO_DOCS",
+                                  "type":  "skipped_step",
+                                  "severity":  "low",
+                                  "description":  "Resolved the incident but did not create any documentation.",
+                                  "consequence":  "No audit trail means the problem cannot be tracked for pattern analysis.",
+                                  "mistake_penalty":  5,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "UB_H1",
+                      "related_step":  "UB_S4",
+                      "text":  "If journalctl returns no output for the service, check /var/log/\u003cservice\u003e/error.log directly.",
+                      "penalty_if_used":  3
+                  },
+                  {
+                      "hint_id":  "UB_H2",
+                      "related_step":  "UB_S5",
+                      "text":  "Run `lsof | wc -l` to count total open file descriptors system-wide if you suspect a file limit issue.",
+                      "penalty_if_used":  3
+                  }
+              ],
+    "competencies":  [
+                         "System Admin",
+                         "Problem Solving",
+                         "Procedure Accuracy",
+                         "Attention to Detail"
+                     ],
+    "competency_weights":  {
+                               "System Admin":  0.5,
+                               "Problem Solving":  0.25,
+                               "Procedure Accuracy":  0.15,
+                               "Attention to Detail":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  70,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+
+                             ],
+    "simulation_type":  "TERMINAL"
+}

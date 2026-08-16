@@ -1,0 +1,223 @@
+{
+    "simulation_id":  "GIT_COLLAB_012",
+    "title":  "Git \u0026 Team Collaboration Workflow",
+    "branch":  "CSE/IT",
+    "level":  2,
+    "interaction_pattern":  "sandbox",
+    "goal":  "Successfully merge a feature branch into main while resolving a real merge conflict without losing any teammate\u0027s work.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "IT \u0026 DevOps",
+    "learning_content":  {
+                             "what":  "Git is the de facto standard version control system used by over 90% of development teams worldwide. Merge conflicts arise whenever two people modify the same lines of the same file in different branches. Understanding how to resolve conflicts cleanly — preserving both parties\u0027 intent — is a fundamental collaborative development skill.",
+                             "how":  "Always fetch before merging to get the latest remote state. Use `git log --graph` to understand branch divergence visually. Merge main INTO your feature branch (not the other way). For each conflict, read both the \u0027ours\u0027 and \u0027theirs\u0027 sections carefully before deciding. Remove every conflict marker. Submit small, focused pull requests — a PR with 50+ changed files is a code review antipattern that hides bugs."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  600,
+    "sop_steps":  [
+                      {
+                          "step_id":  "GIT_S1",
+                          "order":  1,
+                          "instruction":  "Fetch the latest changes from the origin repository using `git fetch origin`.",
+                          "expected_action":  "git_fetch",
+                          "is_safety_critical":  false,
+                          "hint":  "`git fetch` downloads remote changes without modifying your local working directory."
+                      },
+                      {
+                          "step_id":  "GIT_S2",
+                          "order":  2,
+                          "instruction":  "Run `git status` and `git log --oneline --graph --all` to understand the current branch divergence.",
+                          "expected_action":  "review_branch_state",
+                          "is_safety_critical":  false,
+                          "hint":  "The graph view shows you visually where your branch and the main branch have diverged."
+                      },
+                      {
+                          "step_id":  "GIT_S3",
+                          "order":  3,
+                          "instruction":  "Checkout your feature branch and merge the latest main into it to bring it up to date.",
+                          "expected_action":  "git_merge_main",
+                          "is_safety_critical":  false,
+                          "hint":  "Run: `git checkout feature-login` then `git merge origin/main`."
+                      },
+                      {
+                          "step_id":  "GIT_S4",
+                          "order":  4,
+                          "instruction":  "Run `git status` to identify all files with merge conflicts.",
+                          "expected_action":  "identify_conflicts",
+                          "is_safety_critical":  false,
+                          "hint":  "Files with \u0027both modified\u0027 status in git status are the ones with conflicts requiring manual resolution."
+                      },
+                      {
+                          "step_id":  "GIT_S5",
+                          "order":  5,
+                          "instruction":  "Open each conflicted file, understand both changes, and resolve the conflict by keeping the correct logic.",
+                          "expected_action":  "resolve_conflict",
+                          "is_safety_critical":  true,
+                          "hint":  "Remove ALL conflict markers (\u003c\u003c\u003c\u003c\u003c\u003c\u003c, =======, \u003e\u003e\u003e\u003e\u003e\u003e\u003e). The resulting file must be syntactically valid."
+                      },
+                      {
+                          "step_id":  "GIT_S6",
+                          "order":  6,
+                          "instruction":  "Stage the resolved files with `git add \u003cfile\u003e` and verify no conflict markers remain.",
+                          "expected_action":  "git_add_resolved",
+                          "is_safety_critical":  true,
+                          "hint":  "Search for \u0027\u003c\u003c\u003c\u003c\u003c\u003c\u0027 in the file before staging to ensure all markers are removed."
+                      },
+                      {
+                          "step_id":  "GIT_S7",
+                          "order":  7,
+                          "instruction":  "Commit the merge with a descriptive commit message explaining what was resolved.",
+                          "expected_action":  "git_commit_merge",
+                          "is_safety_critical":  false,
+                          "hint":  "A good merge commit message: \u0027Merge main into feature-login: resolve auth.js login logic conflict\u0027."
+                      },
+                      {
+                          "step_id":  "GIT_S8",
+                          "order":  8,
+                          "instruction":  "Push the resolved feature branch to origin and open a Pull Request for team review.",
+                          "expected_action":  "git_push_pr",
+                          "is_safety_critical":  false,
+                          "hint":  "Use `git push origin feature-login`. The PR allows teammates to review before merging to main."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "GIT_D1",
+                                "after_step":  "GIT_S5",
+                                "prompt":  "You aren\u0027t sure which version of the conflicting code in auth.js is correct — yours or your teammate\u0027s. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Keep your version and delete the teammate\u0027s code.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Silently overwrites a teammate\u0027s feature without understanding it — introduces a likely regression.",
+                                                    "mistake_id":  "GIT_M_BLIND_OVERWRITE"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Force push your branch to main to override everything.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Rewrites shared history and destroys your teammate\u0027s entire commit history on that branch.",
+                                                    "mistake_id":  "GIT_M_FORCE_PUSH"
+                                                },
+                                                {
+                                                    "option_id":  "C",
+                                                    "text":  "Contact your teammate, review both changes together, and agree on the correct merged logic.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Code review and communication are essential when you are unsure about conflicting logic.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "GIT_D2",
+                                "after_step":  "GIT_S8",
+                                "prompt":  "Your PR shows 47 changed files across multiple unrelated features. Your teammate asks you to split it. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Insist on merging as-is — splitting is too much extra work.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Large PRs are difficult to review correctly and significantly increase the risk of bugs being merged.",
+                                                    "mistake_id":  "GIT_M_LARGE_PR"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Agree to split into separate, focused PRs for each feature.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Small, focused PRs improve review quality and reduce merge risk.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "GIT_M_FORCE_PUSH",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Used `git push --force` on a shared branch.",
+                                  "consequence":  "Destroys team commit history and may delete colleagues\u0027 work permanently.",
+                                  "mistake_penalty":  40,
+                                  "competency_impact":  {
+                                                            "DevOps Knowledge":  0.7,
+                                                            "Collaboration":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "GIT_M_BLIND_OVERWRITE",
+                                  "type":  "wrong_choice",
+                                  "severity":  "high",
+                                  "description":  "Resolved conflict by deleting a teammate\u0027s code without understanding it.",
+                                  "consequence":  "Introduced a regression into the codebase silently.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Collaboration":  0.6,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "GIT_M_BROKEN_MARKERS",
+                                  "type":  "procedure_error",
+                                  "severity":  "high",
+                                  "description":  "Committed a file that still contained Git conflict markers.",
+                                  "consequence":  "Syntax errors break the build pipeline for the entire team.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Attention to Detail":  0.7,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "GIT_M_LARGE_PR",
+                                  "type":  "wrong_choice",
+                                  "severity":  "medium",
+                                  "description":  "Submitted an oversized PR with unrelated changes mixed together.",
+                                  "consequence":  "Reduces code review effectiveness and increases the probability of bugs slipping through.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Collaboration":  0.4,
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "GIT_H1",
+                      "related_step":  "GIT_S5",
+                      "text":  "Search the file for \u0027\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u0027 using Ctrl+F to ensure no conflict markers are left.",
+                      "penalty_if_used":  2
+                  },
+                  {
+                      "hint_id":  "GIT_H2",
+                      "related_step":  "GIT_S3",
+                      "text":  "Always merge `origin/main` into your feature branch, not the other way around. Keep main clean.",
+                      "penalty_if_used":  3
+                  }
+              ],
+    "competencies":  [
+                         "DevOps Knowledge",
+                         "Collaboration",
+                         "Attention to Detail",
+                         "Procedure Accuracy"
+                     ],
+    "competency_weights":  {
+                               "DevOps Knowledge":  0.4,
+                               "Collaboration":  0.3,
+                               "Attention to Detail":  0.2,
+                               "Procedure Accuracy":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  false
+                },
+    "recommendation_rules":  [
+
+                             ],
+    "simulation_type":  "TERMINAL"
+}

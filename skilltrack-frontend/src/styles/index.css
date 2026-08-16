@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "./theme.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════
+   SKILLTRACK — COURSERA-STYLE DESIGN SYSTEM
+   Primary:  #0056D2 (Coursera Blue)
+   BG:       #f5f7f8 (Light Gray)
+   Surface:  #ffffff (White)
+   Text:     #1f2937 / #4b5563
+══════════════════════════════════════════════ */
+
+:root {
+  --radius: 0.5rem;
+
+  /* ── Coursera Core Palette ── */
+  --nf-black:     #ffffff;
+  --nf-charcoal:  #f5f7f8;
+  --nf-surface:   #ffffff;
+  --nf-surface2:  #f3f4f6;
+  --nf-surface3:  #e5e7eb;
+  --nf-red:       #0056D2;
+  --nf-red-dark:  #0043A4;
+  --nf-red-glow:  rgba(0, 86, 210, 0.15);
+  --nf-white:     #1f2937;
+  --nf-gray:      #4b5563;
+  --nf-gray-dim:  #9ca3af;
+
+  /* ── Token Mappings (used by Tailwind/shadcn) ── */
+  --background: 210 20% 98%;       /* #f5f7f8 */
+  --foreground: 222 47% 11%;       /* #1f2937 */
+
+  --card: 0 0% 100%;               /* white */
+  --card-foreground: 222 47% 11%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+
+  --primary: 215 100% 41%;         /* #0056D2 */
+  --primary-foreground: 0 0% 100%; /* white text on primary */
+
+  --secondary: 210 40% 96%;        /* #f3f4f6 */
+  --secondary-foreground: 222 47% 11%;
+
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%; /* #64748b */
+
+  --accent: 215 100% 41%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 214 32% 91%;           /* light border */
+  --input: 214 32% 91%;
+  --input-background: 0 0% 100%;
+  --switch-background: 215 16% 47%;
+  --ring: 215 100% 41%;
+
+  --chart-1: 215 100% 41%;
+  --chart-2: 142 76% 36%;
+  --chart-3: 38 92% 50%;
+  --chart-4: 263 70% 50%;
+  --chart-5: 197 100% 50%;
+
+  /* Sidebar */
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 222 47% 11%;
+  --sidebar-accent: 215 100% 41%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 214 32% 91%;
+  --sidebar-ring: 215 100% 41%;
+}
+
+/* ── Reset & Base ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  font-family: 'Inter', 'Netflix Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  background-color: var(--nf-charcoal);
+  color: var(--nf-white);
+}
+
+* { border-color: hsl(var(--border)); }
+
+/* ── Custom Scrollbar ─────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--nf-surface3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--nf-gray-dim); }
+
+/* ── Netflix Animations ──────────────────────── */
+@keyframes nf-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes nf-slide-right {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes nf-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes nf-pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 var(--nf-red-glow); }
+  50%       { box-shadow: 0 0 20px 8px var(--nf-red-glow); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes particle-drift {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.6; }
+  50%  { transform: translateY(-80px) translateX(20px) scale(1.2); opacity: 1; }
+  100% { transform: translateY(-160px) translateX(-10px) scale(0.8); opacity: 0; }
+}
+
+/* ── Netflix Utility Classes ─────────────────── */
+.nf-fade-in  { animation: nf-fade-in 0.6s ease forwards; }
+.nf-slide-in { animation: nf-slide-right 0.5s ease forwards; }
+
+.nf-gradient-text {
+  background: linear-gradient(135deg, #E50914 0%, #ff6b6b 50%, #E50914 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: nf-shimmer 3s linear infinite;
+}
+
+.nf-btn-primary {
+  background: var(--nf-red);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: inherit;
+}
+.nf-btn-primary:hover {
+  background: #f40612;
+  transform: scale(1.02);
+}
+
+.nf-btn-outline {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-weight: 600;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 4px;
+  padding: 10px 24px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s, border-color 0.2s;
+  font-family: inherit;
+}
+.nf-btn-outline:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: #fff;
+}
+
+.nf-card {
+  background: var(--nf-surface);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.nf-card:hover {
+  transform: scale(1.03) translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  border-color: rgba(229,9,20,0.4);
+}
+
+/* ── Override light-mode Tailwind classes for dark app ── */
+.bg-white { background-color: var(--nf-surface) !important; }
+.bg-slate-50 { background-color: var(--nf-charcoal) !important; }
+.bg-gray-50 { background-color: var(--nf-charcoal) !important; }
+.bg-blue-50 { background-color: rgba(229,9,20,0.08) !important; }
+.bg-indigo-50 { background-color: rgba(99,102,241,0.1) !important; }
+.bg-purple-50 { background-color: rgba(139,92,246,0.1) !important; }
+.bg-amber-50 { background-color: rgba(245,158,11,0.08) !important; }
+.bg-emerald-50 { background-color: rgba(16,185,129,0.08) !important; }
+
+.text-gray-900 { color: #111827 !important; }
+.text-gray-800 { color: #1F2937 !important; }
+.text-gray-700 { color: #374151 !important; }
+.text-gray-600 { color: #4B5563 !important; }
+.text-gray-500 { color: #6B7280 !important; }
+.text-gray-400 { color: #9CA3AF !important; }
+
+.border-gray-100 { border-color: rgba(255,255,255,0.07) !important; }
+.border-gray-200 { border-color: rgba(255,255,255,0.1) !important; }
+
+.shadow-sm { box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important; }
+
+/* Keep explicit color classes working as expected */
+.text-blue-500  { color: #3b82f6 !important; }
+.text-red-500   { color: #ef4444 !important; }
+.text-green-500 { color: #22c55e !important; }
+.text-amber-500 { color: #f59e0b !important; }
+.text-indigo-500{ color: #6366f1 !important; }
+
+.bg-blue-500   { background-color: #3b82f6 !important; }
+.bg-blue-600   { background-color: #2563eb !important; }
+.bg-red-500    { background-color: var(--nf-red) !important; }

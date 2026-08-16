@@ -1,0 +1,227 @@
+{
+    "simulation_id":  "APP_DEPLOY_013",
+    "title":  "Application Deployment \u0026 Rollback",
+    "branch":  "CSE/IT",
+    "level":  3,
+    "interaction_pattern":  "sandbox",
+    "goal":  "Build, tag, deploy a containerised application using a blue-green pipeline and execute a safe rollback when a fault is detected.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "IT \u0026 DevOps",
+    "learning_content":  {
+                             "what":  "Continuous deployment is the practice of automatically releasing validated software changes to production. Blue-green deployments maintain two identical environments — only one receives live traffic at a time — enabling instant rollbacks without downtime. MTTR (Mean Time To Recovery) is the critical metric: how fast can you restore service when something breaks?",
+                             "how":  "Follow the pipeline strictly: build → local smoke test → push to registry → trigger deploy → monitor error rate and latency for 5 minutes → confirm healthy. If error rate spikes: rollback first, debug second. Never push an image that failed a smoke test. Document every deployment and every rollback — patterns in deployment failures reveal systemic issues."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  600,
+    "sop_steps":  [
+                      {
+                          "step_id":  "DEP_S1",
+                          "order":  1,
+                          "instruction":  "Review the deployment runbook and verify the target environment (staging vs production).",
+                          "expected_action":  "review_runbook",
+                          "is_safety_critical":  false,
+                          "hint":  "The runbook specifies environment variables, resource limits, and health check endpoints for this deployment."
+                      },
+                      {
+                          "step_id":  "DEP_S2",
+                          "order":  2,
+                          "instruction":  "Build the Docker container image and tag it with the correct version: `docker build -t app:v2.0.0 .`",
+                          "expected_action":  "docker_build_tag",
+                          "is_safety_critical":  false,
+                          "hint":  "Verify the Dockerfile uses the correct base image. Check the build output for any warning messages."
+                      },
+                      {
+                          "step_id":  "DEP_S3",
+                          "order":  3,
+                          "instruction":  "Run a smoke test on the newly built container locally before pushing to the registry.",
+                          "expected_action":  "local_smoke_test",
+                          "is_safety_critical":  true,
+                          "hint":  "Run `docker run --rm -p 8080:8080 app:v2.0.0` and hit the `/health` endpoint to confirm it starts correctly."
+                      },
+                      {
+                          "step_id":  "DEP_S4",
+                          "order":  4,
+                          "instruction":  "Push the verified image to the central container registry.",
+                          "expected_action":  "docker_push",
+                          "is_safety_critical":  false,
+                          "hint":  "Ensure your registry credentials are current. A push failure here means nothing gets deployed."
+                      },
+                      {
+                          "step_id":  "DEP_S5",
+                          "order":  5,
+                          "instruction":  "Trigger the deployment pipeline and monitor the rollout progress.",
+                          "expected_action":  "trigger_deploy",
+                          "is_safety_critical":  false,
+                          "hint":  "Watch the health check status for each new pod — a pod that fails its health check will halt the rolling deployment."
+                      },
+                      {
+                          "step_id":  "DEP_S6",
+                          "order":  6,
+                          "instruction":  "Verify deployment success by checking application logs and the monitoring dashboard for errors or latency spikes.",
+                          "expected_action":  "verify_deployment",
+                          "is_safety_critical":  true,
+                          "hint":  "Check error rate and p99 latency for 5 minutes post-deploy. A spike in errors is a deployment failure signal."
+                      },
+                      {
+                          "step_id":  "DEP_S7",
+                          "order":  7,
+                          "instruction":  "If issues are detected, immediately initiate rollback to the last stable version using `kubectl rollout undo`.",
+                          "expected_action":  "rollback_deployment",
+                          "is_safety_critical":  true,
+                          "hint":  "Restore service first, investigate second. Rollback first, then debug in a non-production environment."
+                      },
+                      {
+                          "step_id":  "DEP_S8",
+                          "order":  8,
+                          "instruction":  "Write a deployment incident report detailing what failed, what was rolled back, and next steps.",
+                          "expected_action":  "write_incident_report",
+                          "is_safety_critical":  false,
+                          "hint":  "Include: deployment timestamp, failure symptoms observed, rollback time, and root cause hypothesis."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "DEP_D1",
+                                "after_step":  "DEP_S6",
+                                "prompt":  "5 minutes after deployment, the error rate rises from 0.1% to 8% and customer reports start coming in. What is your immediate action?",
+                                "time_limit_seconds":  60,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Keep debugging the live code to find a hotfix while users experience errors.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Prolonged outage violates SLA and damages user trust. Always restore service before investigating.",
+                                                    "mistake_id":  "DEP_M_NO_ROLLBACK"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Immediately execute rollback to v1.9.0 to restore service, then investigate.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. MTTR (Mean Time To Recovery) takes priority. Restore service first, debug in non-prod.",
+                                                    "mistake_id":  null
+                                                },
+                                                {
+                                                    "option_id":  "C",
+                                                    "text":  "Shut down all servers to prevent further damage.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Total service shutdown is far worse than the current error rate.",
+                                                    "mistake_id":  "DEP_M_WRONG_MITIGATION"
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "DEP_D2",
+                                "after_step":  "DEP_S3",
+                                "prompt":  "The local smoke test shows the /health endpoint returns a 503 error. Do you push to the registry anyway?",
+                                "time_limit_seconds":  60,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Yes — it might work fine in the production environment.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "A container that fails health checks locally will also fail them in production, causing a deployment outage.",
+                                                    "mistake_id":  "DEP_M_FAILED_SMOKE_TEST"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "No — fix the issue and re-run the smoke test before pushing.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Smoke test failures must be resolved before any artifact is promoted to the registry.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "DEP_M_NO_ROLLBACK",
+                                  "type":  "wrong_choice",
+                                  "severity":  "critical",
+                                  "description":  "Failed to rollback a faulty deployment, leaving users experiencing errors.",
+                                  "consequence":  "Prolonged outage, SLA breach, and negative customer impact.",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Incident Response":  0.6,
+                                                            "DevOps Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "DEP_M_WRONG_TAG",
+                                  "type":  "procedure_error",
+                                  "severity":  "medium",
+                                  "description":  "Deployed the wrong container image tag to production.",
+                                  "consequence":  "Unexpected application state — features may be missing or regressed.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Attention to Detail":  0.5,
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "DEP_M_FAILED_SMOKE_TEST",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Pushed an image to the registry despite a failing smoke test.",
+                                  "consequence":  "The broken image will cause a deployment failure or production outage.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "DevOps Knowledge":  0.5,
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "DEP_M_WRONG_MITIGATION",
+                                  "type":  "wrong_choice",
+                                  "severity":  "critical",
+                                  "description":  "Shut down all servers instead of rolling back.",
+                                  "consequence":  "Self-inflicted total service denial instead of a partial error rate.",
+                                  "mistake_penalty":  35,
+                                  "competency_impact":  {
+                                                            "Incident Response":  0.8
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "DEP_H1",
+                      "related_step":  "DEP_S7",
+                      "text":  "Rollback command: `kubectl rollout undo deployment/\u003capp-name\u003e`.",
+                      "penalty_if_used":  5
+                  },
+                  {
+                      "hint_id":  "DEP_H2",
+                      "related_step":  "DEP_S6",
+                      "text":  "Check Grafana or Prometheus for the error rate metric. A healthy deployment should show \u003c0.5% error rate.",
+                      "penalty_if_used":  3
+                  }
+              ],
+    "competencies":  [
+                         "DevOps Knowledge",
+                         "Incident Response",
+                         "Procedure Accuracy",
+                         "Attention to Detail"
+                     ],
+    "competency_weights":  {
+                               "DevOps Knowledge":  0.3,
+                               "Incident Response":  0.4,
+                               "Procedure Accuracy":  0.2,
+                               "Attention to Detail":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  70,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Incident Response",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "CYBER_INCIDENT_004",
+                                     "reason":  "Cybersecurity Incident Response reinforces triage, escalation, and recovery protocols under time pressure."
+                                 }
+                             ],
+    "simulation_type":  "TERMINAL"
+}

@@ -1,0 +1,247 @@
+{
+    "simulation_id":  "ELECTRICAL_PANEL_002",
+    "title":  "Electrical Panel Maintenance",
+    "branch":  "Electrical",
+    "level":  2,
+    "interaction_pattern":  "sequenced_procedure",
+    "goal":  "Safely isolate, inspect, and service a live electrical panel following lockout/verification procedure.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Electrical",
+    "learning_content":  {
+                             "what":  "Electrical panel maintenance involves the inspection, testing, and service of circuit breakers, busbars, and distribution equipment. Live electrical work is one of the highest-risk industrial tasks, capable of causing arc flash, electrocution, and fire. Arc flash can release energy equivalent to a small explosion in milliseconds.",
+                             "how":  "Always de-energize the panel section under maintenance and verify with a voltmeter before touching anything. Use PPE rated for the arc flash incident energy boundary. Test each breaker by operating it through its full range. Check and re-torque all terminations against specification. Document every finding — a loose terminal that passes today becomes a fire next month."
+                         },
+    "prerequisites":  [
+                          "PPE_COMPLIANCE_001"
+                      ],
+    "time_limit_seconds":  300,
+    "sop_steps":  [
+                      {
+                          "step_id":  "EP_S1",
+                          "order":  1,
+                          "instruction":  "Notify affected personnel before beginning isolation.",
+                          "expected_action":  "notify_personnel",
+                          "is_safety_critical":  false,
+                          "hint":  "A quick radio call or posted notice satisfies this."
+                      },
+                      {
+                          "step_id":  "EP_S2",
+                          "order":  2,
+                          "instruction":  "Identify the correct circuit breaker for the panel being serviced.",
+                          "expected_action":  "identify_breaker",
+                          "is_safety_critical":  true,
+                          "hint":  "Cross-check the panel schedule label against the work order."
+                      },
+                      {
+                          "step_id":  "EP_S3",
+                          "order":  3,
+                          "instruction":  "Switch off the identified breaker.",
+                          "expected_action":  "switch_off_breaker",
+                          "is_safety_critical":  true,
+                          "hint":  null
+                      },
+                      {
+                          "step_id":  "EP_S4",
+                          "order":  4,
+                          "instruction":  "Apply lock and tag to the breaker with your ID.",
+                          "expected_action":  "apply_lock_tag",
+                          "is_safety_critical":  true,
+                          "hint":  "Your tag must include name, date, and reason for lockout."
+                      },
+                      {
+                          "step_id":  "EP_S5",
+                          "order":  5,
+                          "instruction":  "Test for zero energy using a voltage tester on all phases.",
+                          "expected_action":  "verify_zero_energy",
+                          "is_safety_critical":  true,
+                          "hint":  "Test the tester itself on a known live source first, then the panel, then the tester again."
+                      },
+                      {
+                          "step_id":  "EP_S6",
+                          "order":  6,
+                          "instruction":  "Open the panel cover and visually inspect wiring and terminals.",
+                          "expected_action":  "inspect_panel_interior",
+                          "is_safety_critical":  false,
+                          "hint":  "Look for discoloration, loose terminals, or insulation damage."
+                      },
+                      {
+                          "step_id":  "EP_S7",
+                          "order":  7,
+                          "instruction":  "Perform the required maintenance task (e.g. tighten terminal, replace component).",
+                          "expected_action":  "perform_maintenance",
+                          "is_safety_critical":  false,
+                          "hint":  null
+                      },
+                      {
+                          "step_id":  "EP_S8",
+                          "order":  8,
+                          "instruction":  "Close the panel cover and remove lock/tag only after confirming work is complete.",
+                          "expected_action":  "remove_lock_tag",
+                          "is_safety_critical":  true,
+                          "hint":  "Never remove your lock while someone else\u0027s is still on the same breaker."
+                      },
+                      {
+                          "step_id":  "EP_S9",
+                          "order":  9,
+                          "instruction":  "Restore power and confirm normal operation.",
+                          "expected_action":  "restore_power",
+                          "is_safety_critical":  false,
+                          "hint":  null
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "EP_D1",
+                                "after_step":  "EP_S5",
+                                "prompt":  "Your voltage tester reads zero on the first try, but you didn\u0027t verify the tester on a known live source beforehand. What do you do?",
+                                "time_limit_seconds":  60,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Proceed — zero reading means it\u0027s safe",
+                                                    "is_correct":  false,
+                                                    "consequence":  "A faulty tester reading zero can falsely indicate a de-energized circuit.",
+                                                    "mistake_id":  "EP_M_UNVERIFIED_TESTER"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Test the tester on a known live source, then re-test the panel",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — this is the only way to confirm the tester itself works.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "EP_D2",
+                                "after_step":  "EP_S6",
+                                "prompt":  "While inspecting, you notice a second person\u0027s lock is already on this same breaker from an earlier shift. What do you do?",
+                                "time_limit_seconds":  45,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Continue your work, it\u0027s not your lock so it doesn\u0027t matter",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Multiple locks indicate multiple people working on this circuit — coordination is required.",
+                                                    "mistake_id":  "EP_M_IGNORED_COEXISTING_LOCK"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Pause and coordinate with the other technician before proceeding",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — group lockout situations require coordination to avoid re-energizing while someone else is still working.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "EP_M_SKIPPED_LOCKTAG",
+                                  "type":  "skipped_step",
+                                  "severity":  "critical",
+                                  "description":  "Learner skipped applying lock/tag before working on the panel.",
+                                  "consequence":  "Panel could be re-energized by another worker while being serviced — risk of severe injury.",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EP_M_UNVERIFIED_TESTER",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Learner trusted a zero-energy reading without first verifying the tester works.",
+                                  "consequence":  "Arc flash / electrocution risk from a false zero-energy reading.",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EP_M_IGNORED_COEXISTING_LOCK",
+                                  "type":  "wrong_choice",
+                                  "severity":  "high",
+                                  "description":  "Learner ignored evidence of a coexisting lockout by another technician.",
+                                  "consequence":  "Risk of premature re-energization while a co-worker is still exposed.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.3,
+                                                            "Communication":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EP_M_WRONG_BREAKER",
+                                  "type":  "wrong_choice",
+                                  "severity":  "critical",
+                                  "description":  "Learner isolated the wrong circuit breaker.",
+                                  "consequence":  "The panel being worked on remains live — direct electrocution risk.",
+                                  "mistake_penalty":  35,
+                                  "competency_impact":  {
+                                                            "Task Knowledge":  0.4,
+                                                            "Safety Awareness":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EP_M_TIMEOUT",
+                                  "type":  "timeout",
+                                  "severity":  "medium",
+                                  "description":  "Learner did not complete isolation procedure within the allotted time.",
+                                  "consequence":  "In a real setting, prolonged isolation delays extend production downtime and exposure window.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Time Management":  0.4
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "EP_H1",
+                      "related_step":  "EP_S5",
+                      "text":  "Remember the three-step test: live source, panel, live source again.",
+                      "penalty_if_used":  3
+                  },
+                  {
+                      "hint_id":  "EP_H2",
+                      "related_step":  "EP_S4",
+                      "text":  "Your tag needs name, date, and reason — missing any one is incomplete.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Safety Awareness",
+                         "Procedure Accuracy",
+                         "Task Knowledge",
+                         "Time Management",
+                         "Communication"
+                     ],
+    "competency_weights":  {
+                               "Safety Awareness":  0.4,
+                               "Procedure Accuracy":  0.25,
+                               "Task Knowledge":  0.2,
+                               "Time Management":  0.1,
+                               "Communication":  0.05
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Safety Awareness",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "PPE_COMPLIANCE_001",
+                                     "reason":  "Reinforce foundational safety-check habits before returning to safety-critical procedures."
+                                 },
+                                 {
+                                     "if_competency":  "Communication",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "CYBER_INCIDENT_004",
+                                     "reason":  "Cybersecurity Incident Response also scores coordination and escalation communication."
+                                 }
+                             ],
+    "simulation_type":  "VISUAL"
+}

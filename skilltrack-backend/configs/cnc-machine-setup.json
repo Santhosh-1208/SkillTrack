@@ -1,0 +1,235 @@
+{
+    "simulation_id":  "CNC_SETUP_003",
+    "title":  "CNC Machine Setup",
+    "branch":  "Mechanical",
+    "level":  2,
+    "interaction_pattern":  "setup_configuration",
+    "goal":  "Correctly configure a CNC machine for a new job: workholding, tool setup, offsets, and a safe dry run before production.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Manufacturing",
+    "learning_content":  {
+                             "what":  "CNC (Computer Numerical Control) machine setup involves loading a workpiece, setting tool offsets, and verifying G-code before production starts. An incorrect setup causes dimensional scrap, broken tooling, or machine crashes — all preventable and expensive. CNC machines follow G-code instructions precisely, so the setup must match the program\u0027s assumptions exactly.",
+                             "how":  "Follow setup in this order: secure the workpiece in the correct orientation → set the Work Coordinate System (G54 origin) → measure and enter each tool\u0027s length offset → run a dry-run at reduced feed (10%) with the spindle off → measure the first-off part before committing to a full production run. Never skip the dry run on a new or modified program."
+                         },
+    "prerequisites":  [
+                          "PPE_COMPLIANCE_001"
+                      ],
+    "time_limit_seconds":  null,
+    "sop_steps":  [
+                      {
+                          "step_id":  "CNC_S1",
+                          "order":  1,
+                          "instruction":  "Review the job traveler / part drawing for required tooling and tolerances.",
+                          "expected_action":  "review_job_specs",
+                          "is_safety_critical":  false,
+                          "hint":  "Check the revision number on the drawing matches the job traveler."
+                      },
+                      {
+                          "step_id":  "CNC_S2",
+                          "order":  2,
+                          "instruction":  "Mount and secure the correct workholding fixture for this part.",
+                          "expected_action":  "mount_fixture",
+                          "is_safety_critical":  true,
+                          "hint":  "Verify fixture matches the part\u0027s datum surfaces shown on the drawing."
+                      },
+                      {
+                          "step_id":  "CNC_S3",
+                          "order":  3,
+                          "instruction":  "Load the required tools into the correct tool stations per the tool list.",
+                          "expected_action":  "load_tools",
+                          "is_safety_critical":  false,
+                          "hint":  "Tool numbers in the program must match physical tool station numbers."
+                      },
+                      {
+                          "step_id":  "CNC_S4",
+                          "order":  4,
+                          "instruction":  "Set work offsets (G54) by touching off the part datum.",
+                          "expected_action":  "set_work_offset",
+                          "is_safety_critical":  true,
+                          "hint":  "Touch off on the correct datum face — not just any convenient surface."
+                      },
+                      {
+                          "step_id":  "CNC_S5",
+                          "order":  5,
+                          "instruction":  "Set tool length/diameter offsets for each loaded tool.",
+                          "expected_action":  "set_tool_offsets",
+                          "is_safety_critical":  true,
+                          "hint":  null
+                      },
+                      {
+                          "step_id":  "CNC_S6",
+                          "order":  6,
+                          "instruction":  "Load and verify the correct CNC program matches the job traveler revision.",
+                          "expected_action":  "load_verify_program",
+                          "is_safety_critical":  true,
+                          "hint":  "Running the wrong program revision is a common and costly mistake."
+                      },
+                      {
+                          "step_id":  "CNC_S7",
+                          "order":  7,
+                          "instruction":  "Run a dry run (air cut, no material, or single-block mode) to verify toolpath clearances.",
+                          "expected_action":  "perform_dry_run",
+                          "is_safety_critical":  true,
+                          "hint":  "Watch for tool-to-fixture clearance especially on rapid moves."
+                      },
+                      {
+                          "step_id":  "CNC_S8",
+                          "order":  8,
+                          "instruction":  "Close and lock the machine enclosure before starting production.",
+                          "expected_action":  "close_enclosure",
+                          "is_safety_critical":  true,
+                          "hint":  null
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "CNC_D1",
+                                "after_step":  "CNC_S6",
+                                "prompt":  "The loaded program is revision C, but the job traveler specifies revision D. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Run it anyway — revisions are usually close enough",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Running the wrong revision can scrap the part or damage tooling on unexpected geometry.",
+                                                    "mistake_id":  "CNC_M_WRONG_PROGRAM_REV"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Stop and locate/load revision D before proceeding",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — program revision must always match the job traveler exactly.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "CNC_D2",
+                                "after_step":  "CNC_S7",
+                                "prompt":  "During the dry run, you notice the toolpath comes within 2mm of the fixture clamp on one pass. What do you do?",
+                                "time_limit_seconds":  90,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Proceed to production, 2mm is probably fine",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Thermal expansion and vibration during real cutting can close that margin and cause a crash.",
+                                                    "mistake_id":  "CNC_M_IGNORED_CLEARANCE"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Stop, adjust fixture position or program, and re-run the dry run",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — tight clearances found in dry run must be resolved before production.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "CNC_M_WRONG_PROGRAM_REV",
+                                  "type":  "wrong_choice",
+                                  "severity":  "high",
+                                  "description":  "Learner ran a program revision that didn\u0027t match the job traveler.",
+                                  "consequence":  "Risk of scrapped part, tool breakage, or machine crash on unexpected geometry.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Task Knowledge":  0.4,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CNC_M_SKIPPED_DRYRUN",
+                                  "type":  "skipped_step",
+                                  "severity":  "critical",
+                                  "description":  "Learner skipped the dry run and went straight to production cutting.",
+                                  "consequence":  "Undetected clearance or offset errors become a live crash risk during production.",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.3,
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CNC_M_IGNORED_CLEARANCE",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Learner proceeded to production despite a tight clearance found during dry run.",
+                                  "consequence":  "Machine crash risk — potential damage to tooling, fixture, or spindle.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.3,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CNC_M_WRONG_OFFSET",
+                                  "type":  "wrong_order",
+                                  "severity":  "medium",
+                                  "description":  "Work or tool offsets set incorrectly or from the wrong datum.",
+                                  "consequence":  "Part dimensions out of tolerance, or tool-to-part collision.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "CNC_M_ENCLOSURE_OPEN",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Production run started with the machine enclosure open or unlocked.",
+                                  "consequence":  "Direct exposure to moving spindle and flying debris.",
+                                  "mistake_penalty":  35,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "CNC_H1",
+                      "related_step":  "CNC_S4",
+                      "text":  "Touch off on the datum marked with the triangle symbol on the drawing.",
+                      "penalty_if_used":  2
+                  },
+                  {
+                      "hint_id":  "CNC_H2",
+                      "related_step":  "CNC_S7",
+                      "text":  "Use single-block mode on the first dry run pass to catch issues before full-speed air cutting.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Safety Awareness",
+                         "Procedure Accuracy",
+                         "Task Knowledge"
+                     ],
+    "competency_weights":  {
+                               "Safety Awareness":  0.35,
+                               "Procedure Accuracy":  0.35,
+                               "Task Knowledge":  0.3
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  false
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Procedure Accuracy",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "ELECTRICAL_PANEL_002",
+                                     "reason":  "Electrical Panel Maintenance reinforces strict sequential procedure-following."
+                                 },
+                                 {
+                                     "if_competency":  "Task Knowledge",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "PPE_COMPLIANCE_001",
+                                     "reason":  "Rebuild foundational equipment/task-matching knowledge before revisiting setup tasks."
+                                 }
+                             ],
+    "simulation_type":  "VISUAL"
+}

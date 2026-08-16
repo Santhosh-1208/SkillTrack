@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SkillTrack Simulation Config Schema",
+  "description": "Shared structure every simulation JSON must follow. The generic engine (frontend player, attempt-logging backend, AI scoring service) reads only this shape, never simulation-specific code.",
+  "type": "object",
+  "required": [
+    "simulation_id",
+    "title",
+    "branch",
+    "level",
+    "goal",
+    "sop_steps",
+    "decision_points",
+    "possible_mistakes",
+    "competencies",
+    "competency_weights",
+    "scoring"
+  ],
+  "properties": {
+    "simulation_id": {
+      "type": "string",
+      "description": "Unique key, e.g. PPE_COMPLIANCE_001"
+    },
+    "title": { "type": "string" },
+    "branch": {
+      "type": "string",
+      "enum": ["All", "Electrical", "Mechanical", "CSE"],
+      "description": "Which engineering branch this simulation primarily targets"
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4,
+      "description": "1=Simple, 2=Timed, 3=Unexpected failure, 4=Real industrial pressure"
+    },
+    "interaction_pattern": {
+      "type": "string",
+      "enum": ["checklist", "sequenced_procedure", "setup_configuration", "investigative_branching"]
+    },
+    "goal": { "type": "string" },
+    "prerequisites": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "time_limit_seconds": {
+      "type": ["integer", "null"],
+      "description": "Null/omitted if this simulation is untimed"
+    },
+    "sop_steps": {
+      "type": "array",
+      "description": "The expected sequence of actions. The engine diffs actual learner actions against this array.",
+      "items": {
+        "type": "object",
+        "required": ["step_id", "order", "instruction", "expected_action"],
+        "properties": {
+          "step_id": { "type": "string" },
+          "order": { "type": "integer" },
+          "instruction": { "type": "string" },
+          "expected_action": { "type": "string" },
+          "is_safety_critical": { "type": "boolean" },
+          "hint": { "type": "string" }
+        }
+      }
+    },
+    "decision_points": {
+      "type": "array",
+      "description": "Branching moments where the learner picks from options rather than performing a linear step.",
+      "items": {
+        "type": "object",
+        "required": ["decision_id", "prompt", "options"],
+        "properties": {
+          "decision_id": { "type": "string" },
+          "after_step": { "type": "string", "description": "step_id this decision point follows, if any" },
+          "prompt": { "type": "string" },
+          "time_limit_seconds": { "type": ["integer", "null"] },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["option_id", "text", "is_correct"],
+              "properties": {
+                "option_id": { "type": "string" },
+                "text": { "type": "string" },
+                "is_correct": { "type": "boolean" },
+                "consequence": { "type": "string" },
+                "mistake_id": {
+                  "type": ["string", "null"],
+                  "description": "If choosing this option is wrong, points to a possible_mistakes entry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "possible_mistakes": {
+      "type": "array",
+      "description": "Catalog of everything that can go wrong. The scoring engine looks up entries here whenever it detects a deviation.",
+      "items": {
+        "type": "object",
+        "required": ["mistake_id", "type", "severity", "description", "mistake_penalty", "competency_impact"],
+        "properties": {
+          "mistake_id": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["skipped_step", "wrong_order", "wrong_choice", "safety_violation", "timeout", "unnecessary_action"]
+          },
+          "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+          "description": { "type": "string" },
+          "consequence": { "type": "string" },
+          "mistake_penalty": { "type": "number", "description": "Points deducted from the 100-point score" },
+          "competency_impact": {
+            "type": "object",
+            "description": "Map of competency name -> negative impact weight applied when this mistake occurs"
+          }
+        }
+      }
+    },
+    "hints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hint_id": { "type": "string" },
+          "related_step": { "type": "string" },
+          "text": { "type": "string" },
+          "penalty_if_used": { "type": "number" }
+        }
+      }
+    },
+    "competencies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "The named skill dimensions this simulation measures, e.g. Safety Awareness, Procedure Accuracy"
+    },
+    "competency_weights": {
+      "type": "object",
+      "description": "Must sum to 1.0. Converts mistake penalties into per-competency and overall competency scores."
+    },
+    "scoring": {
+      "type": "object",
+      "required": ["base_score", "pass_threshold"],
+      "properties": {
+        "base_score": { "type": "number", "default": 100 },
+        "pass_threshold": { "type": "number", "description": "Minimum score to be marked 'passed'" },
+        "time_bonus_enabled": { "type": "boolean" }
+      }
+    },
+    "recommendation_rules": {
+      "type": "array",
+      "description": "If-competency-below-threshold -> recommend simulation_id. Powers cross-sim recommendations with zero ML.",
+      "items": {
+        "type": "object",
+        "required": ["if_competency", "below_score", "recommend_simulation_id"],
+        "properties": {
+          "if_competency": { "type": "string" },
+          "below_score": { "type": "number" },
+          "recommend_simulation_id": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  }
+}

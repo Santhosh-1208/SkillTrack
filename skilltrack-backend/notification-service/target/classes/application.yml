@@ -1,0 +1,18 @@
+server:
+  port: 18084
+spring:
+  application:
+    name: notification-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/skilltrackv1
+logging:
+  level:
+    com.skilltrack: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
+  instance:
+    prefer-ip-address: true

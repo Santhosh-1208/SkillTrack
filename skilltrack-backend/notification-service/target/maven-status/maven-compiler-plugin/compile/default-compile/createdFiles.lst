@@ -1,0 +1,6 @@
+com\skilltrack\api\controller\NotificationController.class
+com\skilltrack\api\config\GlobalExceptionHandler.class
+com\skilltrack\api\entity\Notification.class
+com\skilltrack\api\service\NotificationService.class
+com\skilltrack\NotificationServiceApplication.class
+com\skilltrack\api\repository\NotificationRepository.class

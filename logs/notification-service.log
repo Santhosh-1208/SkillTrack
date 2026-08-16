@@ -1,0 +1,232 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.skilltrack:notification-service >-----------------
+[INFO] Building notification-service 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.2:run (default-cli) > test-compile @ notification-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ notification-service ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ notification-service ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ notification-service ---
+[INFO] skip non existing resourceDirectory E:\SKILLTRACK\skilltrack-backend\notification-service\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ notification-service ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.3.2:run (default-cli) < test-compile @ notification-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.2:run (default-cli) @ notification-service ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.2)
+
+2026-08-12T13:27:20.805+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : Starting NotificationServiceApplication using Java 26.0.1 with PID 23292 (E:\SKILLTRACK\skilltrack-backend\notification-service\target\classes started by Admin in E:\SKILLTRACK\skilltrack-backend\notification-service)
+2026-08-12T13:27:20.810+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-08-12T13:27:21.041+05:30  INFO 23292 --- [notification-service] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-08-12T13:27:21.042+05:30  INFO 23292 --- [notification-service] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-08-12T13:27:24.559+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-08-12T13:27:25.012+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 442 ms. Found 1 MongoDB repository interface.
+2026-08-12T13:27:25.651+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=23860ef0-220e-314c-bd2b-d03503676f6f
+2026-08-12T13:27:25.824+05:30  WARN 23292 --- [notification-service] [  restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-08-12T13:27:25.828+05:30  WARN 23292 --- [notification-service] [  restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/C:/Users/Admin/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.26/tomcat-embed-core-10.1.26.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-08-12T13:27:27.005+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-08-12T13:27:27.035+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-08-12T13:27:27.035+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2026-08-12T13:27:27.192+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-08-12T13:27:27.193+05:30  INFO 23292 --- [notification-service] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6149 ms
+2026-08-12T13:27:27.655+05:30  INFO 23292 --- [notification-service] [  restartedMain] org.mongodb.driver.client                : MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "5.0.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/26.0.1+8-34"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, transportSettings=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@365b33b5, com.mongodb.Jep395RecordCodecProvider@42da460, com.mongodb.KotlinCodecProvider@7071bb39]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
+2026-08-12T13:27:27.697+05:30  INFO 23292 --- [notification-service] [localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=28, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=36229400}
+2026-08-12T13:27:27.960+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-08-12T13:27:29.754+05:30  INFO 23292 --- [notification-service] [  restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-08-12T13:27:29.825+05:30  WARN 23292 --- [notification-service] [  restartedMain] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-08-12T13:27:29.874+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-08-12T13:27:29.929+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-08-12T13:27:29.943+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T13:27:29.963+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-08-12T13:27:29.963+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-08-12T13:27:29.963+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-08-12T13:27:29.963+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-08-12T13:27:29.963+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-08-12T13:27:29.963+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-08-12T13:27:29.963+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-08-12T13:27:30.755+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-08-12T13:27:30.758+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-08-12T13:27:30.761+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-08-12T13:27:30.765+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1786521450763 with initial instances count: 1
+2026-08-12T13:27:30.770+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application NOTIFICATION-SERVICE with eureka with status UP
+2026-08-12T13:27:30.771+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1786521450771, current=UP, previous=STARTING]
+2026-08-12T13:27:30.774+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084: registering service...
+2026-08-12T13:27:30.815+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2026-08-12T13:27:30.816+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8084
+2026-08-12T13:27:30.858+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084 - registration status: 204
+2026-08-12T13:27:30.858+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : Started NotificationServiceApplication in 12.553 seconds (process running for 14.373)
+2026-08-12T13:27:30.965+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.skilltrack.seed.NotificationSeeder   : Notifications already seeded, skipping.
+2026-08-12T13:28:45.318+05:30  INFO 23292 --- [notification-service] [nio-8084-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-08-12T13:28:45.319+05:30  INFO 23292 --- [notification-service] [nio-8084-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-08-12T13:28:45.339+05:30  INFO 23292 --- [notification-service] [nio-8084-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 13 ms
+2026-08-12T13:32:29.980+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T13:37:29.986+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T13:42:29.995+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T13:47:29.999+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T13:52:30.011+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T13:57:30.028+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:02:30.037+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:07:30.043+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:12:30.057+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:17:30.068+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:22:30.070+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:27:30.081+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:32:30.097+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:37:30.106+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:42:30.108+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:47:30.122+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:52:30.125+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T14:57:30.132+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:02:30.142+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:07:30.153+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:12:30.155+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:17:30.162+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:19:34.742+05:30  INFO 23292 --- [notification-service] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 7 class path changes (0 additions, 7 deletions, 0 modifications)
+2026-08-12T15:19:34.750+05:30  INFO 23292 --- [notification-service] [       Thread-5] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application NOTIFICATION-SERVICE with eureka with status DOWN
+2026-08-12T15:19:34.751+05:30  INFO 23292 --- [notification-service] [       Thread-5] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1786528174751, current=DOWN, previous=UP]
+2026-08-12T15:19:34.751+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084: registering service...
+2026-08-12T15:19:34.779+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084 - registration status: 204
+2026-08-12T15:19:34.810+05:30  INFO 23292 --- [notification-service] [       Thread-5] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-08-12T15:19:37.819+05:30  INFO 23292 --- [notification-service] [       Thread-5] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-08-12T15:19:37.820+05:30  WARN 23292 --- [notification-service] [coveryClient-%d] c.netflix.discovery.TimedSupervisorTask  : task supervisor shutting down, can't accept the task
+2026-08-12T15:19:37.824+05:30  INFO 23292 --- [notification-service] [       Thread-5] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084 - deregister  status: 200
+2026-08-12T15:19:37.824+05:30  INFO 23292 --- [notification-service] [       Thread-5] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.2)
+
+2026-08-12T15:19:37.981+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : Starting NotificationServiceApplication using Java 26.0.1 with PID 23292 (E:\SKILLTRACK\skilltrack-backend\notification-service\target\classes started by Admin in E:\SKILLTRACK\skilltrack-backend\notification-service)
+2026-08-12T15:19:37.982+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-08-12T15:19:38.251+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-08-12T15:19:38.261+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 1 MongoDB repository interface.
+2026-08-12T15:19:38.329+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a51696e7-9f40-325f-be74-55f2aee6f998
+2026-08-12T15:19:38.341+05:30  WARN 23292 --- [notification-service] [  restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-08-12T15:19:38.342+05:30  WARN 23292 --- [notification-service] [  restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-08-12T15:19:38.394+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-08-12T15:19:38.396+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-08-12T15:19:38.396+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2026-08-12T15:19:38.435+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-08-12T15:19:38.435+05:30  INFO 23292 --- [notification-service] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 450 ms
+2026-08-12T15:19:38.458+05:30  INFO 23292 --- [notification-service] [  restartedMain] org.mongodb.driver.client                : MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "5.0.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/26.0.1+8-34"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, transportSettings=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@365b33b5, com.mongodb.Jep395RecordCodecProvider@42da460, com.mongodb.KotlinCodecProvider@7071bb39]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
+2026-08-12T15:19:38.460+05:30  INFO 23292 --- [notification-service] [localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=28, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1353100}
+2026-08-12T15:19:38.476+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-08-12T15:19:38.736+05:30  INFO 23292 --- [notification-service] [  restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-08-12T15:19:38.747+05:30  WARN 23292 --- [notification-service] [  restartedMain] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-08-12T15:19:38.758+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-08-12T15:19:38.761+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-08-12T15:19:38.761+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:19:38.761+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-08-12T15:19:38.761+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-08-12T15:19:38.761+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-08-12T15:19:38.761+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-08-12T15:19:38.762+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-08-12T15:19:38.762+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-08-12T15:19:38.762+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-08-12T15:19:38.794+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-08-12T15:19:38.794+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-08-12T15:19:38.794+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-08-12T15:19:38.795+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1786528178795 with initial instances count: 5
+2026-08-12T15:19:38.795+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application NOTIFICATION-SERVICE with eureka with status UP
+2026-08-12T15:19:38.796+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1786528178796, current=UP, previous=STARTING]
+2026-08-12T15:19:38.796+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084: registering service...
+2026-08-12T15:19:38.800+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2026-08-12T15:19:38.800+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8084
+2026-08-12T15:19:38.808+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084 - registration status: 204
+2026-08-12T15:19:38.812+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : Started NotificationServiceApplication in 0.879 seconds (process running for 6742.327)
+2026-08-12T15:19:38.814+05:30  INFO 23292 --- [notification-service] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-08-12T15:19:40.127+05:30  INFO 23292 --- [notification-service] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 6 class path changes (6 additions, 0 deletions, 0 modifications)
+2026-08-12T15:19:40.128+05:30  INFO 23292 --- [notification-service] [       Thread-9] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application NOTIFICATION-SERVICE with eureka with status DOWN
+2026-08-12T15:19:40.128+05:30  INFO 23292 --- [notification-service] [       Thread-9] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1786528180128, current=DOWN, previous=UP]
+2026-08-12T15:19:40.128+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084: registering service...
+2026-08-12T15:19:40.131+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084 - registration status: 204
+2026-08-12T15:19:40.142+05:30  INFO 23292 --- [notification-service] [       Thread-9] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2026-08-12T15:19:43.143+05:30  INFO 23292 --- [notification-service] [       Thread-9] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2026-08-12T15:19:43.159+05:30  INFO 23292 --- [notification-service] [       Thread-9] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084 - deregister  status: 200
+2026-08-12T15:19:43.159+05:30  INFO 23292 --- [notification-service] [       Thread-9] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.2)
+
+2026-08-12T15:19:43.260+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : Starting NotificationServiceApplication using Java 26.0.1 with PID 23292 (E:\SKILLTRACK\skilltrack-backend\notification-service\target\classes started by Admin in E:\SKILLTRACK\skilltrack-backend\notification-service)
+2026-08-12T15:19:43.260+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-08-12T15:19:43.427+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-08-12T15:19:43.435+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 1 MongoDB repository interface.
+2026-08-12T15:19:43.479+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a51696e7-9f40-325f-be74-55f2aee6f998
+2026-08-12T15:19:43.485+05:30  WARN 23292 --- [notification-service] [  restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-08-12T15:19:43.486+05:30  WARN 23292 --- [notification-service] [  restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-08-12T15:19:43.523+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-08-12T15:19:43.524+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-08-12T15:19:43.524+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2026-08-12T15:19:43.558+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-08-12T15:19:43.558+05:30  INFO 23292 --- [notification-service] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 296 ms
+2026-08-12T15:19:43.577+05:30  INFO 23292 --- [notification-service] [  restartedMain] org.mongodb.driver.client                : MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "5.0.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/26.0.1+8-34"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, transportSettings=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@365b33b5, com.mongodb.Jep395RecordCodecProvider@42da460, com.mongodb.KotlinCodecProvider@7071bb39]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null}
+2026-08-12T15:19:43.578+05:30  INFO 23292 --- [notification-service] [localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=28, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1589700}
+2026-08-12T15:19:43.590+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-08-12T15:19:43.757+05:30  INFO 23292 --- [notification-service] [  restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-08-12T15:19:43.765+05:30  WARN 23292 --- [notification-service] [  restartedMain] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-08-12T15:19:43.772+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-08-12T15:19:43.774+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-08-12T15:19:43.793+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-08-12T15:19:43.794+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-08-12T15:19:43.794+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-08-12T15:19:43.794+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1786528183794 with initial instances count: 5
+2026-08-12T15:19:43.795+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application NOTIFICATION-SERVICE with eureka with status UP
+2026-08-12T15:19:43.795+05:30  INFO 23292 --- [notification-service] [  restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1786528183795, current=UP, previous=STARTING]
+2026-08-12T15:19:43.795+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084: registering service...
+2026-08-12T15:19:43.799+05:30  INFO 23292 --- [notification-service] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2026-08-12T15:19:43.800+05:30  INFO 23292 --- [notification-service] [  restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8084
+2026-08-12T15:19:43.806+05:30  INFO 23292 --- [notification-service] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_NOTIFICATION-SERVICE/DESKTOP-4K1TS8H.mshome.net:notification-service:8084 - registration status: 204
+2026-08-12T15:19:43.810+05:30  INFO 23292 --- [notification-service] [  restartedMain] c.s.NotificationServiceApplication       : Started NotificationServiceApplication in 0.596 seconds (process running for 6747.326)
+2026-08-12T15:19:43.811+05:30  INFO 23292 --- [notification-service] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-08-12T15:24:43.779+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:29:43.788+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:34:43.795+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:39:43.804+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:44:43.810+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-08-12T15:49:43.816+05:30  INFO 23292 --- [notification-service] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+^CTerminate batch job (Y/N)? 

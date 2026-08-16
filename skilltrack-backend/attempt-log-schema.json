@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SkillTrack Attempt Log Schema",
+  "description": "What the backend records for a single learner run of any simulation. Same shape regardless of which simulation_id was run — this is what the AI scoring engine reads alongside the matching simulation config.",
+  "type": "object",
+  "required": ["attempt_id", "simulation_id", "learner_id", "started_at", "actions"],
+  "properties": {
+    "attempt_id": { "type": "string" },
+    "simulation_id": { "type": "string" },
+    "learner_id": { "type": "string" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "ended_at": { "type": ["string", "null"], "format": "date-time" },
+    "status": {
+      "type": "string",
+      "enum": ["in_progress", "completed", "abandoned", "timed_out"]
+    },
+    "actions": {
+      "type": "array",
+      "description": "Every learner action in order, as it happened.",
+      "items": {
+        "type": "object",
+        "required": ["action_id", "step_id", "timestamp"],
+        "properties": {
+          "action_id": { "type": "string" },
+          "step_id": { "type": "string", "description": "Which sop_step this action corresponds to" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "action_type": { "type": "string", "enum": ["step_completed", "step_skipped", "wrong_action"] }
+        }
+      }
+    },
+    "decisions_made": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision_id", "option_id_chosen", "timestamp"],
+        "properties": {
+          "decision_id": { "type": "string" },
+          "option_id_chosen": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "time_taken_seconds": { "type": "number" }
+        }
+      }
+    },
+    "hints_used": {
+      "type": "array",
+      "items": { "type": "string", "description": "hint_id values used" }
+    },
+    "mistakes_made": {
+      "type": "array",
+      "description": "Populated by the scoring engine after evaluation, not by the learner directly.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "mistake_id": { "type": "string" },
+          "occurred_at": { "type": "string", "format": "date-time" },
+          "related_step_or_decision": { "type": "string" }
+        }
+      }
+    },
+    "total_time_seconds": { "type": "number" },
+    "final_score": {
+      "type": ["object", "null"],
+      "description": "Set once the scoring engine has evaluated this attempt.",
+      "properties": {
+        "overall_score": { "type": "number" },
+        "passed": { "type": "boolean" },
+        "competency_scores": { "type": "object" },
+        "ai_explanations": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "recommended_next_simulations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,227 @@
+{
+    "simulation_id":  "EQUIP_ASSEMBLY_010",
+    "title":  "Industrial Pump Equipment Assembly",
+    "branch":  "Mechanical",
+    "level":  3,
+    "interaction_pattern":  "3d_assembly",
+    "goal":  "Correctly assemble a modular centrifugal pump housing to manufacturing specification with correct part orientation and torque sequence.",
+    "has_3d_viewer":  true,
+    "three_model_url":  "/models/equip-assembly-010.glb",
+    "category":  "Mechanical",
+    "learning_content":  {
+                             "what":  "Industrial equipment assembly requires strict adherence to Bills of Materials, torque specifications, and installation sequences. A centrifugal pump with a reversed impeller generates zero flow. One with an under-torqued gasket leaks under pressure. Precision assembly is a quality-critical task where a single error can result in catastrophic failure during operation.",
+                             "how":  "Always verify all parts against the BOM before starting. Inspect mating surfaces for burrs or damage. Lubricate seals only with the approved compound (wrong lubricant degrades elastomers). Install rotating parts in the correct orientation by following the flow direction arrow. Torque fasteners in a three-pass star pattern (30% → 70% → 100%). Perform a hand-rotation check after assembly — any drag means something is wrong."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  600,
+    "sop_steps":  [
+                      {
+                          "step_id":  "EA_S1",
+                          "order":  1,
+                          "instruction":  "Retrieve and verify all assembly components against the Bill of Materials (BOM) for part numbers and quantities.",
+                          "expected_action":  "verify_bom",
+                          "is_safety_critical":  false,
+                          "hint":  "Check each component\u0027s part number label against the BOM. A single wrong part can cause pump failure."
+                      },
+                      {
+                          "step_id":  "EA_S2",
+                          "order":  2,
+                          "instruction":  "Inspect the pump housing bore for debris, surface damage, and dimensional compliance.",
+                          "expected_action":  "inspect_housing",
+                          "is_safety_critical":  false,
+                          "hint":  "Wipe the bore with a clean lint-free cloth. Any scoring or burr must be deburred before assembly."
+                      },
+                      {
+                          "step_id":  "EA_S3",
+                          "order":  3,
+                          "instruction":  "Place the base gasket onto the pump housing, ensuring all bolt holes are aligned.",
+                          "expected_action":  "place_gasket",
+                          "is_safety_critical":  false,
+                          "hint":  "The gasket has a notch on one edge that aligns with the housing orientation pin."
+                      },
+                      {
+                          "step_id":  "EA_S4",
+                          "order":  4,
+                          "instruction":  "Apply a thin, even coat of assembly lubricant to the impeller shaft seal.",
+                          "expected_action":  "lubricate_seal",
+                          "is_safety_critical":  false,
+                          "hint":  "Use only the approved silicone grease. Never use petroleum-based grease on elastomer seals."
+                      },
+                      {
+                          "step_id":  "EA_S5",
+                          "order":  5,
+                          "instruction":  "Insert the impeller into the housing with the curved blades facing upward (toward the outlet port).",
+                          "expected_action":  "insert_impeller",
+                          "is_safety_critical":  true,
+                          "hint":  "Identify the outlet port on the housing — the impeller blades must curve toward it for correct flow."
+                      },
+                      {
+                          "step_id":  "EA_S6",
+                          "order":  6,
+                          "instruction":  "Position the top cover and hand-tighten all bolts before applying torque.",
+                          "expected_action":  "position_cover",
+                          "is_safety_critical":  false,
+                          "hint":  "All bolts must be hand-tight before any are torqued. This ensures even seating of the gasket."
+                      },
+                      {
+                          "step_id":  "EA_S7",
+                          "order":  7,
+                          "instruction":  "Torque all bolts to the specified value (35 Nm) in a star pattern using a calibrated torque wrench.",
+                          "expected_action":  "torque_bolts",
+                          "is_safety_critical":  true,
+                          "hint":  "A star pattern means tightening bolts across from each other — never in a circle. Do 3 passes: 30%, 70%, 100%."
+                      },
+                      {
+                          "step_id":  "EA_S8",
+                          "order":  8,
+                          "instruction":  "Rotate the shaft by hand to confirm it turns freely without binding or dragging.",
+                          "expected_action":  "rotate_shaft_check",
+                          "is_safety_critical":  true,
+                          "hint":  "Any resistance or roughness during hand-rotation means something is misaligned or incorrectly installed."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "EA_D1",
+                                "after_step":  "EA_S5",
+                                "prompt":  "You accidentally dropped the impeller during installation. It appears undamaged visually. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Wipe it off and install it — it looks fine.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Micro-fractures not visible to the eye can propagate under operational stress and cause catastrophic failure.",
+                                                    "mistake_id":  "EA_M_DAMAGED_PART"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Tag the impeller as \u0027Dropped — inspect required\u0027 and request a replacement.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Precision rotating parts that have been dropped must be re-certified before installation.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "EA_D2",
+                                "after_step":  "EA_S8",
+                                "prompt":  "The shaft rotates but feels slightly rough in one spot during hand-rotation. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "It\u0027s minor — install the pump and run it to see if the roughness goes away.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Running a pump with internal friction damage will rapidly accelerate seal and bearing failure.",
+                                                    "mistake_id":  "EA_M_IGNORED_DRAG"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Disassemble, inspect for the source of drag, and correct before reassembling.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Any rotational drag must be found and resolved before commissioning.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "EA_M_DAMAGED_PART",
+                                  "type":  "quality_violation",
+                                  "severity":  "critical",
+                                  "description":  "Installed a precision component that was dropped without re-inspection.",
+                                  "consequence":  "Catastrophic pump failure during operation from hidden micro-fracture.",
+                                  "mistake_penalty":  30,
+                                  "competency_impact":  {
+                                                            "Quality Assurance":  0.6,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EA_M_WRONG_ORIENTATION",
+                                  "type":  "wrong_action",
+                                  "severity":  "critical",
+                                  "description":  "Installed the impeller with the blades facing the wrong direction.",
+                                  "consequence":  "The pump will generate no flow and may create destructive pressure oscillations.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.5,
+                                                            "Task Knowledge":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EA_M_POOR_TORQUE_SEQ",
+                                  "type":  "wrong_order",
+                                  "severity":  "high",
+                                  "description":  "Tightened bolts in a circular (spiral) pattern instead of a star pattern.",
+                                  "consequence":  "Uneven gasket compression causes leaks and early gasket failure.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.5,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EA_M_IGNORED_DRAG",
+                                  "type":  "safety_violation",
+                                  "severity":  "high",
+                                  "description":  "Commissioned pump without resolving rotational drag found during hand-rotation check.",
+                                  "consequence":  "Rapid bearing and seal destruction leading to pump failure.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Attention to Detail":  0.6,
+                                                            "Quality Assurance":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "EA_M_SKIPPED_BOM_CHECK",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Assembled pump without verifying parts against the Bill of Materials.",
+                                  "consequence":  "Wrong part numbers may result in dimensional mismatches or incompatible materials.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.4
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "EA_H1",
+                      "related_step":  "EA_S7",
+                      "text":  "Star torque pattern: tighten the bolt directly opposite each one you just tightened.",
+                      "penalty_if_used":  3
+                  },
+                  {
+                      "hint_id":  "EA_H2",
+                      "related_step":  "EA_S5",
+                      "text":  "The outlet port is the larger diameter port on the top of the housing casing.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Procedure Accuracy",
+                         "Task Knowledge",
+                         "Quality Assurance",
+                         "Attention to Detail"
+                     ],
+    "competency_weights":  {
+                               "Procedure Accuracy":  0.35,
+                               "Task Knowledge":  0.3,
+                               "Quality Assurance":  0.25,
+                               "Attention to Detail":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  true
+                },
+    "recommendation_rules":  [
+
+                             ],
+    "simulation_type":  "PROCEDURAL"
+}

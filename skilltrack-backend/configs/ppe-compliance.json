@@ -1,0 +1,241 @@
+{
+    "simulation_id":  "PPE_COMPLIANCE_001",
+    "title":  "PPE Compliance \u0026 Inspection",
+    "branch":  "All",
+    "level":  1,
+    "interaction_pattern":  "checklist",
+    "goal":  "Select, inspect, and correctly wear the appropriate personal protective equipment before entering a hazard zone.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Safety \u0026 HSE",
+    "learning_content":  {
+                             "what":  "Personal Protective Equipment (PPE) is any device or garment worn to minimise exposure to workplace hazards. Employers must assess risks and provide appropriate PPE free of charge under health and safety regulations. PPE is the last line of defence — it does not eliminate the hazard, it only reduces risk.",
+                             "how":  "Select PPE based on the specific hazard type (chemical, impact, heat). Inspect every item before use for cracks, tears, or expiry. Wear in the correct sequence to ensure seals and closures work properly. Never use damaged PPE — replace it immediately. Always confirm at the compliance checkpoint before entering a hazard zone."
+                         },
+    "prerequisites":  [
+
+                      ],
+    "time_limit_seconds":  null,
+    "sop_steps":  [
+                      {
+                          "step_id":  "PPE_S1",
+                          "order":  1,
+                          "instruction":  "Identify the hazard zone and required PPE category from the posted signage.",
+                          "expected_action":  "identify_ppe_requirement",
+                          "is_safety_critical":  false,
+                          "hint":  "Check the hazard sign at the zone entrance — it lists required PPE."
+                      },
+                      {
+                          "step_id":  "PPE_S2",
+                          "order":  2,
+                          "instruction":  "Select safety helmet from the PPE rack.",
+                          "expected_action":  "select_helmet",
+                          "is_safety_critical":  true,
+                          "hint":  "Helmets are color-coded by role; pick the one matching your assigned role."
+                      },
+                      {
+                          "step_id":  "PPE_S3",
+                          "order":  3,
+                          "instruction":  "Inspect helmet for cracks or damage before wearing.",
+                          "expected_action":  "inspect_helmet",
+                          "is_safety_critical":  true,
+                          "hint":  "Look for hairline cracks near the shell edge and check the strap."
+                      },
+                      {
+                          "step_id":  "PPE_S4",
+                          "order":  4,
+                          "instruction":  "Select and inspect safety goggles.",
+                          "expected_action":  "inspect_goggles",
+                          "is_safety_critical":  true,
+                          "hint":  "Goggles should have no scratches obstructing vision."
+                      },
+                      {
+                          "step_id":  "PPE_S5",
+                          "order":  5,
+                          "instruction":  "Select and inspect gloves rated for the task.",
+                          "expected_action":  "inspect_gloves",
+                          "is_safety_critical":  true,
+                          "hint":  "Match glove rating (cut/chemical/heat) to the task on the signage."
+                      },
+                      {
+                          "step_id":  "PPE_S6",
+                          "order":  6,
+                          "instruction":  "Select safety footwear and verify sole condition.",
+                          "expected_action":  "inspect_footwear",
+                          "is_safety_critical":  false,
+                          "hint":  "Steel-toe boots with intact soles are required in this zone."
+                      },
+                      {
+                          "step_id":  "PPE_S7",
+                          "order":  7,
+                          "instruction":  "Don all selected PPE and verify fit (straps, seals, closures).",
+                          "expected_action":  "wear_and_verify_fit",
+                          "is_safety_critical":  true,
+                          "hint":  "A loose chinstrap or gaping goggle seal counts as improper fit."
+                      },
+                      {
+                          "step_id":  "PPE_S8",
+                          "order":  8,
+                          "instruction":  "Confirm compliance at the checkpoint scanner before entry.",
+                          "expected_action":  "confirm_checkpoint",
+                          "is_safety_critical":  false,
+                          "hint":  "The scanner checks that all required PPE items are logged as worn."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "PPE_D1",
+                                "after_step":  "PPE_S3",
+                                "prompt":  "The helmet you picked has a small hairline crack near the rim. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Wear it anyway, the crack looks minor",
+                                                    "is_correct":  false,
+                                                    "consequence":  "A compromised helmet fails to protect against impact.",
+                                                    "mistake_id":  "PPE_M_CRACKED_HELMET"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Discard it and select a replacement helmet",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — damaged PPE must never be worn.",
+                                                    "mistake_id":  null
+                                                },
+                                                {
+                                                    "option_id":  "C",
+                                                    "text":  "Tape over the crack and wear it",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Tape does not restore structural integrity.",
+                                                    "mistake_id":  "PPE_M_CRACKED_HELMET"
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "PPE_D2",
+                                "after_step":  "PPE_S5",
+                                "prompt":  "The task involves handling a mild solvent, but only cut-resistant gloves are on the rack in your size. What do you do?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Use the cut-resistant gloves since they\u0027re the closest fit",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Cut-resistant gloves do not protect against chemical exposure.",
+                                                    "mistake_id":  "PPE_M_WRONG_GLOVE_RATING"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Request chemical-rated gloves from the supervisor before proceeding",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct — task-appropriate PPE rating must always be matched.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "PPE_M_SKIPPED_INSPECTION",
+                                  "type":  "skipped_step",
+                                  "severity":  "high",
+                                  "description":  "Learner wore PPE without inspecting it first.",
+                                  "consequence":  "Undetected damage in PPE eliminates its protective function.",
+                                  "mistake_penalty":  15,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.3,
+                                                            "Procedure Accuracy":  0.15
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "PPE_M_CRACKED_HELMET",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Learner chose to wear or repair damaged PPE instead of replacing it.",
+                                  "consequence":  "A cracked helmet can fail completely on impact.",
+                                  "mistake_penalty":  25,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.5
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "PPE_M_WRONG_GLOVE_RATING",
+                                  "type":  "wrong_choice",
+                                  "severity":  "high",
+                                  "description":  "Learner selected PPE not rated for the actual task hazard.",
+                                  "consequence":  "Exposure risk specific to the hazard (chemical, thermal, etc.) is not mitigated.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.3,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "PPE_M_IMPROPER_FIT",
+                                  "type":  "wrong_choice",
+                                  "severity":  "medium",
+                                  "description":  "PPE worn without verifying straps, seals, or closures.",
+                                  "consequence":  "Ill-fitted PPE can shift or fail during actual hazard exposure.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "PPE_M_WRONG_ORDER",
+                                  "type":  "wrong_order",
+                                  "severity":  "low",
+                                  "description":  "PPE items donned in an order that skips logical dependency (e.g. gloves before sleeve seals).",
+                                  "consequence":  "Minor procedural inefficiency, not typically hazardous on its own.",
+                                  "mistake_penalty":  5,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.1
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "PPE_H1",
+                      "related_step":  "PPE_S3",
+                      "text":  "Always run your thumb along helmet edges to feel for cracks, not just look.",
+                      "penalty_if_used":  2
+                  },
+                  {
+                      "hint_id":  "PPE_H2",
+                      "related_step":  "PPE_S5",
+                      "text":  "Glove rating labels are printed on the cuff.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Safety Awareness",
+                         "Procedure Accuracy",
+                         "Task Knowledge"
+                     ],
+    "competency_weights":  {
+                               "Safety Awareness":  0.5,
+                               "Procedure Accuracy":  0.3,
+                               "Task Knowledge":  0.2
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  70,
+                    "time_bonus_enabled":  false
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Safety Awareness",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "ELECTRICAL_PANEL_002",
+                                     "reason":  "Electrical Panel Maintenance reinforces safety-critical sequencing and consequence awareness."
+                                 },
+                                 {
+                                     "if_competency":  "Task Knowledge",
+                                     "below_score":  60,
+                                     "recommend_simulation_id":  "CNC_SETUP_003",
+                                     "reason":  "CNC Setup builds task-specific equipment knowledge through guided configuration."
+                                 }
+                             ],
+    "simulation_type":  "VISUAL"
+}

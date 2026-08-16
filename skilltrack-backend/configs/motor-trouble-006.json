@@ -1,0 +1,228 @@
+{
+    "simulation_id":  "MOTOR_TROUBLE_006",
+    "title":  "Three-Phase Induction Motor Troubleshooting",
+    "branch":  "Electrical",
+    "level":  3,
+    "interaction_pattern":  "physics_solver",
+    "goal":  "Systematically diagnose a three-phase induction motor fault using electrical measurements and logical fault isolation.",
+    "has_3d_viewer":  false,
+    "three_model_url":  null,
+    "category":  "Electrical",
+    "learning_content":  {
+                             "what":  "Three-phase induction motors are the workhorse of industrial production, accounting for over 70% of industrial electricity consumption. They are reliable but fail from electrical faults (single-phasing, insulation breakdown, overloading) or mechanical faults (bearing wear, rotor bar damage). Misdiagnosis leads to replacing functional components while the real fault remains.",
+                             "how":  "Use a structured diagnostic sequence: nameplate review → visual inspection → insulation resistance (megger test) → supply voltage balance → running current balance → thermal imaging. Always apply LOTO before any physical inspection or megger test. Compare all readings against the nameplate rated values. Zero current on one phase is single-phasing — the most dangerous and most common fault."
+                         },
+    "prerequisites":  [
+                          "ELECTRICAL_PANEL_002"
+                      ],
+    "time_limit_seconds":  600,
+    "sop_steps":  [
+                      {
+                          "step_id":  "MOT_S1",
+                          "order":  1,
+                          "instruction":  "Review the motor nameplate data: rated voltage, rated current (FLA), power factor and insulation class.",
+                          "expected_action":  "review_nameplate",
+                          "is_safety_critical":  false,
+                          "hint":  "The nameplate is on the motor housing. Note the Full Load Amps — this is your reference for current measurements."
+                      },
+                      {
+                          "step_id":  "MOT_S2",
+                          "order":  2,
+                          "instruction":  "Apply LOTO on the motor disconnect before performing any physical inspection.",
+                          "expected_action":  "apply_loto",
+                          "is_safety_critical":  true,
+                          "hint":  "Never open the terminal box or touch windings without locking out and verifying zero energy."
+                      },
+                      {
+                          "step_id":  "MOT_S3",
+                          "order":  3,
+                          "instruction":  "Perform a visual inspection: check for burn marks, oil contamination, and bearing condition.",
+                          "expected_action":  "visual_inspection",
+                          "is_safety_critical":  false,
+                          "hint":  "Discoloration or a burning smell near the windings indicates overheating. Check the shaft for excessive play."
+                      },
+                      {
+                          "step_id":  "MOT_S4",
+                          "order":  4,
+                          "instruction":  "Perform an insulation resistance test (megger) between each winding phase and ground.",
+                          "expected_action":  "megger_test",
+                          "is_safety_critical":  true,
+                          "hint":  "LOTO must be applied before megger testing. A reading below 1 MΩ indicates insulation breakdown."
+                      },
+                      {
+                          "step_id":  "MOT_S5",
+                          "order":  5,
+                          "instruction":  "Remove LOTO, restore power, and measure line-to-line voltages at the motor terminals (L1-L2, L2-L3, L3-L1).",
+                          "expected_action":  "measure_voltage",
+                          "is_safety_critical":  true,
+                          "hint":  "All three readings should be within 1% of each other (e.g. 480V ± 5V). Imbalance suggests supply issue."
+                      },
+                      {
+                          "step_id":  "MOT_S6",
+                          "order":  6,
+                          "instruction":  "Clamp-meter all three phases while motor is running under normal load and record L1, L2, L3 currents.",
+                          "expected_action":  "measure_current",
+                          "is_safety_critical":  true,
+                          "hint":  "Current imbalance exceeding 10% between phases is significant. Zero current on one phase = single-phasing."
+                      },
+                      {
+                          "step_id":  "MOT_S7",
+                          "order":  7,
+                          "instruction":  "Measure motor casing temperature using a thermal gun. Compare against the rated temperature rise.",
+                          "expected_action":  "measure_temperature",
+                          "is_safety_critical":  false,
+                          "hint":  "Point the thermal gun at the motor casing (not the cooling fins). Overtemperature suggests blocked ventilation or overloading."
+                      },
+                      {
+                          "step_id":  "MOT_S8",
+                          "order":  8,
+                          "instruction":  "Based on all measurements, identify the fault and document findings for the maintenance log.",
+                          "expected_action":  "document_fault",
+                          "is_safety_critical":  false,
+                          "hint":  "Use all gathered data to narrow the fault to a single root cause before ordering parts or repairs."
+                      }
+                  ],
+    "decision_points":  [
+                            {
+                                "decision_id":  "MOT_D1",
+                                "after_step":  "MOT_S6",
+                                "prompt":  "Your readings are: L1=10A, L2=10A, L3=0A. The motor hums but does not rotate. What is the fault?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Motor is overloaded.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Overloading draws HIGH current on all three phases, not zero on one.",
+                                                    "mistake_id":  "MOT_M_WRONG_DIAGNOSIS"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Single-phasing — loss of Phase 3 supply.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. The motor lost one phase, causing the humming and failure to start.",
+                                                    "mistake_id":  null
+                                                },
+                                                {
+                                                    "option_id":  "C",
+                                                    "text":  "Bearing failure.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Bearing failure causes mechanical noise and draws high current on all phases, not zero on one.",
+                                                    "mistake_id":  "MOT_M_WRONG_DIAGNOSIS"
+                                                }
+                                            ]
+                            },
+                            {
+                                "decision_id":  "MOT_D2",
+                                "after_step":  "MOT_S4",
+                                "prompt":  "Megger test shows 0.5 MΩ insulation resistance on Phase 2 winding. What action do you take?",
+                                "time_limit_seconds":  null,
+                                "options":  [
+                                                {
+                                                    "option_id":  "A",
+                                                    "text":  "Put the motor back into service — 0.5 MΩ is still some resistance.",
+                                                    "is_correct":  false,
+                                                    "consequence":  "Below 1 MΩ indicates imminent winding failure. Running this motor risks catastrophic failure.",
+                                                    "mistake_id":  "MOT_M_IGNORED_INSULATION"
+                                                },
+                                                {
+                                                    "option_id":  "B",
+                                                    "text":  "Tag the motor as failed, remove from service, and schedule rewinding.",
+                                                    "is_correct":  true,
+                                                    "consequence":  "Correct. Failed insulation must be addressed before the motor is run again.",
+                                                    "mistake_id":  null
+                                                }
+                                            ]
+                            }
+                        ],
+    "possible_mistakes":  [
+                              {
+                                  "mistake_id":  "MOT_M_WRONG_DIAGNOSIS",
+                                  "type":  "wrong_choice",
+                                  "severity":  "high",
+                                  "description":  "Incorrectly diagnosed the motor fault from current readings.",
+                                  "consequence":  "Leads to unnecessary replacement of functional parts and wasted downtime.",
+                                  "mistake_penalty":  20,
+                                  "competency_impact":  {
+                                                            "Task Knowledge":  0.7,
+                                                            "Problem Solving":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "MOT_M_MEGGER_ON_LIVE",
+                                  "type":  "safety_violation",
+                                  "severity":  "critical",
+                                  "description":  "Attempted to use megger without applying LOTO first.",
+                                  "consequence":  "Destroys the test instrument and causes a severe electrical arc flash hazard.",
+                                  "mistake_penalty":  50,
+                                  "competency_impact":  {
+                                                            "Safety Awareness":  0.8,
+                                                            "Procedure Accuracy":  0.2
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "MOT_M_IGNORED_INSULATION",
+                                  "type":  "wrong_choice",
+                                  "severity":  "critical",
+                                  "description":  "Returned motor to service with failed insulation resistance.",
+                                  "consequence":  "Winding failure causes fire risk and unplanned shutdown.",
+                                  "mistake_penalty":  35,
+                                  "competency_impact":  {
+                                                            "Task Knowledge":  0.5,
+                                                            "Safety Awareness":  0.3
+                                                        }
+                              },
+                              {
+                                  "mistake_id":  "MOT_M_NO_NAMEPLATE_CHECK",
+                                  "type":  "skipped_step",
+                                  "severity":  "medium",
+                                  "description":  "Made current measurements without checking the rated FLA on the nameplate.",
+                                  "consequence":  "Cannot determine if measured current is abnormal without a reference value.",
+                                  "mistake_penalty":  10,
+                                  "competency_impact":  {
+                                                            "Procedure Accuracy":  0.5,
+                                                            "Task Knowledge":  0.2
+                                                        }
+                              }
+                          ],
+    "hints":  [
+                  {
+                      "hint_id":  "MOT_H1",
+                      "related_step":  "MOT_S4",
+                      "text":  "A megger reading below 1 MΩ to ground indicates insulation breakdown.",
+                      "penalty_if_used":  5
+                  },
+                  {
+                      "hint_id":  "MOT_H2",
+                      "related_step":  "MOT_S6",
+                      "text":  "Clamp the meter jaws around a single cable, not around the conduit.",
+                      "penalty_if_used":  2
+                  }
+              ],
+    "competencies":  [
+                         "Task Knowledge",
+                         "Safety Awareness",
+                         "Procedure Accuracy",
+                         "Problem Solving"
+                     ],
+    "competency_weights":  {
+                               "Task Knowledge":  0.4,
+                               "Safety Awareness":  0.3,
+                               "Procedure Accuracy":  0.2,
+                               "Problem Solving":  0.1
+                           },
+    "scoring":  {
+                    "base_score":  100,
+                    "pass_threshold":  75,
+                    "time_bonus_enabled":  false
+                },
+    "recommendation_rules":  [
+                                 {
+                                     "if_competency":  "Safety Awareness",
+                                     "below_score":  70,
+                                     "recommend_simulation_id":  "LOTO_PROC_004",
+                                     "reason":  "Reinforce energy isolation rules before performing live electrical measurements."
+                                 }
+                             ],
+    "simulation_type":  "VISUAL"
+}

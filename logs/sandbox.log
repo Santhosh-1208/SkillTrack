@@ -1,7 +1,0 @@
-INFO:     Will watch for changes in these directories: ['E:\\SKILLTRACK\\skilltrack-backend\\sandbox-orchestrator']
-INFO:     Uvicorn running on http://127.0.0.1:8086 (Press CTRL+C to quit)
-INFO:     Started reloader process [23740] using WatchFiles
-INFO:     Started server process [17348]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-^C
